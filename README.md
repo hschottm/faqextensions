@@ -22,6 +22,8 @@ $GLOBALS['TL_DCA']['tl_faq']['fields']['recommended'] = array(
 	'sql'                     => "char(1) NOT NULL default ''"
 );
 ```
+![recommended_backend](https://cloud.githubusercontent.com/assets/873113/12032366/da35e33c-ae17-11e5-8071-535cd6ed054e.png)
+
 ## Modules
 ### Most frequently viewed FAQ list
 ### Recommended FAQ list
