@@ -1,22 +1,8 @@
 <?php
 
-/**
- * Contao Open Source CMS
- *
- * Copyright (c) 2005-2015 Leo Feyer
- *
- * @license LGPL-3.0+
- */
+namespace Hschottm\FaqExtensions;
 
-namespace FaqExtensions;
-
-
-/**
- * Class ModuleFaqTopList
- *
- * @author Helmut Schottmüller <https://github.com/hschottm>
- */
-class ModuleFaqRecommendedList extends \Contao\ModuleFaqList
+class ModuleFaqTopList extends \Contao\ModuleFaqList
 {
 	/**
 	 * Template
@@ -36,7 +22,7 @@ class ModuleFaqRecommendedList extends \Contao\ModuleFaqList
 			/** @var \BackendTemplate|object $objTemplate */
 			$objTemplate = new \BackendTemplate('be_wildcard');
 
-			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['faqrecommendedlist'][0]) . ' ###';
+			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['faqtoplist'][0]) . ' ###';
 			$objTemplate->title = $this->headline;
 			$objTemplate->id = $this->id;
 			$objTemplate->link = $this->name;
@@ -60,7 +46,7 @@ class ModuleFaqRecommendedList extends \Contao\ModuleFaqList
 	 */
 	protected function compile()
 	{
-		$objFaq = \FaqExtensions\FaqModel::findPublishedByRecommendation(array("order" => $this->faq_sortorder, "limit" => (($this->faq_limit > 0) ? $this->faq_limit : 10)));
+		$objFaq = \FaqExtensions\FaqModel::findPublishedByViewCount(array("limit" => (($this->faq_limit > 0) ? $this->faq_limit : 10)));
 
 		if ($objFaq === null)
 		{

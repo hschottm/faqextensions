@@ -1,23 +1,16 @@
 <?php
 
-/**
- * Contao Open Source CMS
- *
- * Copyright (c) 2005-2015 Leo Feyer
- *
- * @license LGPL-3.0+
- */
-
-
-/**
- * tl_faq extension
- *
- * @author Helmut Schottmüller <https://github.com/hschottm>
- */
-
 $GLOBALS['TL_DCA']['tl_faq']['palettes']['default'] = str_replace('noComments', 'noComments,recommended', $GLOBALS['TL_DCA']['tl_faq']['palettes']['default']);
 
 $GLOBALS['TL_DCA']['tl_faq']['fields']['viewcount'] = array(
+	'sql'                     => "int(10) unsigned NOT NULL default '0'"
+);
+
+$GLOBALS['TL_DCA']['tl_faq']['fields']['helpful'] = array(
+	'sql'                     => "int(10) unsigned NOT NULL default '0'"
+);
+
+$GLOBALS['TL_DCA']['tl_faq']['fields']['nothelpful'] = array(
 	'sql'                     => "int(10) unsigned NOT NULL default '0'"
 );
 
