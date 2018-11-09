@@ -20,7 +20,7 @@ use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
  *
  * @author Helmut Schottmüller (hschottm)
  */
-class Plugin implements BundlePluginInterface
+class FaqExtensionsPlugin implements BundlePluginInterface
 {
     /**
      * {@inheritdoc}
