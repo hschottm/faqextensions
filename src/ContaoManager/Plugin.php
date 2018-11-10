@@ -11,16 +11,18 @@
 
 namespace Hschottm\FaqExtensionsBundle\ContaoManager;
 
-use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
+use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
+use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
+use Hschottm\FaqExtensionsBundle\FaqExtensionsBundle;
 
 /**
  * Plugin for the Contao Manager.
  *
  * @author Helmut Schottmüller (hschottm)
  */
-class FaqExtensionsPlugin implements BundlePluginInterface
+class Plugin implements BundlePluginInterface
 {
     /**
      * {@inheritdoc}
