@@ -37,5 +37,5 @@
     },
     "extra":{
       "contao-manager-plugin": "Hschottm\\FaqExtensionsBundle\\ContaoManager\\Plugin"
-    },
+    }
 }
