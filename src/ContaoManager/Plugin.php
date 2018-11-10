@@ -34,7 +34,7 @@ class Plugin implements BundlePluginInterface
         return [
             BundleConfig::create(FaqExtensionsBundle::class)
                 ->setLoadAfter([ContaoCoreBundle::class])
-                ->setReplace(['faq']),
+                ->setReplace(['faqextensions']),
         ];
     }
 }
