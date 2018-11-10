@@ -38,5 +38,5 @@
           "src/Resources/contao/languages/",
           "src/Resources/contao/templates/"
   	    ]
-    },
+    }
 }
