@@ -6,7 +6,7 @@ namespace Hschottm\FaqExtensionsBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class HschottmFaqExtensionsBundle
+class HschottmFaqExtensionsBundle extends Bundle
 {
 
 }
