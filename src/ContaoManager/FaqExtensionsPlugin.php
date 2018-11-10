@@ -28,9 +28,8 @@ class FaqExtensionsPlugin implements BundlePluginInterface
     public function getBundles(ParserInterface $parser)
     {
         return [
-            BundleConfig::create('Hschottm\FaqExtensionsBundle\FaqExtensionsBundle')
-                ->setLoadAfter(['Contao\CoreBundle\ContaoCoreBundle'])
-                ->setReplace(['faq']),
+            BundleConfig::create(FaqExtensionsBundle::class)
+                ->setLoadAfter([ContaoCoreBundle::class]);
         ];
     }
 }
