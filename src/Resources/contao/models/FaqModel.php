@@ -1,6 +1,6 @@
 <?php
 
- namespace Hschottm\FaqExtensions;
+ namespace Hschottm\FaqExtensionsBundle;
 
 class FaqModel extends \Contao\FaqModel
 {

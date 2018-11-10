@@ -1,6 +1,6 @@
 <?php
 
-namespace Hschottm\FaqExtensions;
+namespace Hschottm\FaqExtensionsBundle;
 
 class ModuleFaqTopList extends \Contao\ModuleFaqList
 {
@@ -46,7 +46,7 @@ class ModuleFaqTopList extends \Contao\ModuleFaqList
 	 */
 	protected function compile()
 	{
-		$objFaq = \FaqExtensions\FaqModel::findPublishedByViewCount(array("limit" => (($this->faq_limit > 0) ? $this->faq_limit : 10)));
+		$objFaq = \Hschottm\FaqExtensionsBundle\FaqModel::findPublishedByViewCount(array("limit" => (($this->faq_limit > 0) ? $this->faq_limit : 10)));
 
 		if ($objFaq === null)
 		{

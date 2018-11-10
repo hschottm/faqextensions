@@ -29,7 +29,7 @@ class Plugin implements BundlePluginInterface
     /**
      * {@inheritdoc}
      */
-     public function getBundles(ParserInterface $parser): array
+     public function getBundles(ParserInterface $parser)
      {
          return [
              BundleConfig::create(HschottmFaqExtensionsBundle::class)

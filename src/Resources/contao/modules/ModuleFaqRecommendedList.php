@@ -1,6 +1,6 @@
 <?php
 
-namespace Hschottm\FaqExtensions;
+namespace Hschottm\FaqExtensionsBundle;
 
 class ModuleFaqRecommendedList extends \Contao\ModuleFaqList
 {
@@ -46,7 +46,7 @@ class ModuleFaqRecommendedList extends \Contao\ModuleFaqList
 	 */
 	protected function compile()
 	{
-		$objFaq = \FaqExtensions\FaqModel::findPublishedByRecommendation(array("order" => $this->faq_sortorder, "limit" => (($this->faq_limit > 0) ? $this->faq_limit : 10)));
+		$objFaq = \Hschottm\FaqExtensionsBundle\FaqModel::findPublishedByRecommendation(array("order" => $this->faq_sortorder, "limit" => (($this->faq_limit > 0) ? $this->faq_limit : 10)));
 
 		if ($objFaq === null)
 		{
