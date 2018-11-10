@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Hschottm\FaqExtensionsBundle\ContaoManager;
 
-use Hschottm\FaqExtensionsBundle\FaqExtensionsBundle;
+use Hschottm\FaqExtensionsBundle\HschottmFaqExtensionsBundle;
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
@@ -32,7 +32,7 @@ class Plugin implements BundlePluginInterface
      public function getBundles(ParserInterface $parser): array
      {
          return [
-             BundleConfig::create(FaqExtensionsBundle::class)
+             BundleConfig::create(HschottmFaqExtensionsBundle::class)
                  ->setLoadAfter([ContaoCoreBundle::class])
                  ->setReplace(['faqextensions']),
          ];
