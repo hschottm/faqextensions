@@ -29,7 +29,7 @@ class FaqExtensionsPlugin implements BundlePluginInterface
     {
         return [
             BundleConfig::create(FaqExtensionsBundle::class)
-                ->setLoadAfter([ContaoCoreBundle::class]);
+                ->setLoadAfter([ContaoCoreBundle::class]),
         ];
     }
 }
