@@ -29,12 +29,12 @@ class Plugin implements BundlePluginInterface
     /**
      * {@inheritdoc}
      */
-    public function getBundles(ParserInterface $parser)
-    {
-        return [
-            BundleConfig::create(FaqExtensionsBundle::class)
-                ->setLoadAfter([ContaoCoreBundle::class])
-                ->setReplace(['faqextensions']),
-        ];
-    }
+     public function getBundles(ParserInterface $parser): array
+     {
+         return [
+             BundleConfig::create(FaqExtensionsBundle::class)
+                 ->setLoadAfter([ContaoCoreBundle::class])
+                 ->setReplace(['faqextensions']),
+         ];
+     }
 }
