@@ -34,6 +34,7 @@ class Plugin implements BundlePluginInterface
          return [
              BundleConfig::create(HschottmFaqExtensionsBundle::class)
                  ->setLoadAfter([ContaoCoreBundle::class])
+                 ->setLoadAfter([ContaoFaqBundle::class])
                  ->setReplace(['faqextensions']),
          ];
       }
