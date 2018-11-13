@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Hschottm\FaqExtensionsBundle\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
+use Contao\FaqBundle\ContaoFaqBundle;
 use Hschottm\FaqExtensionsBundle\HschottmFaqExtensionsBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
@@ -33,7 +34,6 @@ class Plugin implements BundlePluginInterface
      {
          return [
              BundleConfig::create(HschottmFaqExtensionsBundle::class)
-                 ->setLoadAfter([ContaoCoreBundle::class])
                  ->setLoadAfter([ContaoFaqBundle::class])
                  ->setReplace(['faqextensions']),
          ];
