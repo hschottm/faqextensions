@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Hschottm\FaqExtensionsBundle\ContaoManager;
 
-use Hschottm\FaqExtensionsBundle\HschottmFaqExtensionsBundle;
 use Contao\CoreBundle\ContaoCoreBundle;
+use Hschottm\FaqExtensionsBundle\HschottmFaqExtensionsBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;

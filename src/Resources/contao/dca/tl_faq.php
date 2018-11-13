@@ -1,5 +1,7 @@
 <?php
 
+System::loadLanguageFile('tl_content');
+
 $GLOBALS['TL_DCA']['tl_faq']['palettes']['default'] = str_replace('noComments', 'noComments,recommended', $GLOBALS['TL_DCA']['tl_faq']['palettes']['default']);
 
 $GLOBALS['TL_DCA']['tl_faq']['fields']['viewcount'] = array(
