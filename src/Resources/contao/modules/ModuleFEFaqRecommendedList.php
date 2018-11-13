@@ -4,22 +4,13 @@ namespace Hschottm\FaqExtensionsBundle;
 
 class ModuleFEFaqRecommendedList extends \Contao\ModuleFaqList
 {
-	/**
-	 * Template
-	 * @var string
-	 */
+  /*
 	protected $strTemplate = 'mod_faqlist_top';
 
-	/**
-	 * Display a wildcard in the back end
-	 *
-	 * @return string
-	 */
 	public function generate()
 	{
 		if (TL_MODE == 'BE')
 		{
-			/** @var \BackendTemplate|object $objTemplate */
 			$objTemplate = new \BackendTemplate('be_wildcard');
 
 			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['faqrecommendedlist'][0]) . ' ###';
@@ -41,9 +32,6 @@ class ModuleFEFaqRecommendedList extends \Contao\ModuleFaqList
 	}
 
 
-	/**
-	 * Generate the module
-	 */
 	protected function compile()
 	{
 		$objFaq = \Hschottm\FaqExtensionsBundle\FEFaqModel::findPublishedByRecommendation(array("order" => $this->faq_sortorder, "limit" => (($this->faq_limit > 0) ? $this->faq_limit : 10)));
@@ -64,7 +52,6 @@ class ModuleFEFaqRecommendedList extends \Contao\ModuleFaqList
 			$arrTemp['title'] = specialchars($objFaq->question, true);
 			$arrTemp['href'] = $this->generateFaqLink($objFaq);
 
-			/** @var \FaqCategoryModel $objPid */
 			$objPid = $objFaq->getRelated('pid');
 
 			array_push($arrFaq, $arrTemp);
@@ -81,4 +68,5 @@ class ModuleFEFaqRecommendedList extends \Contao\ModuleFaqList
 
 		$this->Template->faq = $arrFaq;
 	}
+  */
 }
