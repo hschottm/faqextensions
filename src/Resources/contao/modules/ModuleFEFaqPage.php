@@ -4,7 +4,7 @@ namespace Hschottm\FaqExtensionsBundle;
 use Psr\Log\LogLevel;
 use Contao\CoreBundle\Monolog\ContaoContext;
 
-class ModuleFaqPage extends \Contao\ModuleFaqPage
+class ModuleFEFaqPage extends \Contao\ModuleFaqPage
 {
 	protected function compile()
 	{

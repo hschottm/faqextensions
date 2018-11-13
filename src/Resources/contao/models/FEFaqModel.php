@@ -2,7 +2,7 @@
 
  namespace Hschottm\FaqExtensionsBundle;
 
-class FaqModel extends \Contao\FaqModel
+class FEFaqModel extends \Contao\FaqModel
 {
 
 	/**

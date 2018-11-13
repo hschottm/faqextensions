@@ -2,7 +2,7 @@
 
 namespace Hschottm\FaqExtensionsBundle;
 
-class ModuleFaqReader extends \Contao\ModuleFaqReader
+class ModuleFEFaqReader extends \Contao\ModuleFaqReader
 {
 	protected function compile()
 	{

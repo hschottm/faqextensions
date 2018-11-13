@@ -2,7 +2,7 @@
 
 namespace Hschottm\FaqExtensionsBundle;
 
-class ModuleFaqTopList extends \Contao\ModuleFaqList
+class ModuleFEFaqTopList extends \Contao\ModuleFaqList
 {
 	/**
 	 * Template
@@ -46,7 +46,7 @@ class ModuleFaqTopList extends \Contao\ModuleFaqList
 	 */
 	protected function compile()
 	{
-		$objFaq = \Hschottm\FaqExtensionsBundle\FaqModel::findPublishedByViewCount(array("limit" => (($this->faq_limit > 0) ? $this->faq_limit : 10)));
+		$objFaq = \Hschottm\FaqExtensionsBundle\FEFaqModel::findPublishedByViewCount(array("limit" => (($this->faq_limit > 0) ? $this->faq_limit : 10)));
 
 		if ($objFaq === null)
 		{
