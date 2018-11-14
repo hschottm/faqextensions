@@ -12,7 +12,7 @@ class FEFaqModel extends \Contao\FaqModel
 	 *
 	 * @return \Model\Collection|\FaqModel|null A collection of models or null if there are no FAQs
 	 */
-   /*
+
 	public static function findPublishedByViewCount(array $arrOptions=array())
 	{
 		$t = static::$strTable;
@@ -27,7 +27,7 @@ class FEFaqModel extends \Contao\FaqModel
 
 		return static::findBy($arrColumns, 0, $arrOptions);
 	}
-  */
+
 
 	/**
 	 * Find all published FAQs by their recommendation flag
@@ -36,7 +36,7 @@ class FEFaqModel extends \Contao\FaqModel
 	 *
 	 * @return \Model\Collection|\FaqModel|null A collection of models or null if there are no FAQs
 	 */
-   /*
+
 	public static function findPublishedByRecommendation(array $arrOptions=array())
 	{
 		$t = static::$strTable;
@@ -70,5 +70,5 @@ class FEFaqModel extends \Contao\FaqModel
 
 		return static::findBy($arrColumns, 1, $arrOptions);
 	}
-  */
+
 }

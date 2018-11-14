@@ -6,7 +6,6 @@ use Contao\CoreBundle\Monolog\ContaoContext;
 
 class ModuleFEFaqPage extends \Contao\ModuleFaqPage
 {
-  /*
 	protected function compile()
 	{
 		\Contao\ModuleFaqPage::compile();
@@ -22,5 +21,4 @@ class ModuleFEFaqPage extends \Contao\ModuleFaqPage
 			}
 		}
 	}
-  */
 }

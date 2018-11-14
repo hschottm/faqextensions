@@ -4,7 +4,6 @@ namespace Hschottm\FaqExtensionsBundle;
 
 class ModuleFEFaqReader extends \Contao\ModuleFaqReader
 {
-  /*
 	protected function compile()
 	{
 		\Contao\ModuleFaqReader::compile();
@@ -15,5 +14,4 @@ class ModuleFEFaqReader extends \Contao\ModuleFaqReader
 			$objFaq->save();
 		}
 	}
-  */
 }

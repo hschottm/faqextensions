@@ -4,7 +4,6 @@ namespace Hschottm\FaqExtensionsBundle;
 
 class ModuleFEFaqTopList extends \Contao\ModuleFaqList
 {
-  /*
 	protected $strTemplate = 'mod_faqlist_top';
 
 	public function generate()
@@ -68,5 +67,4 @@ class ModuleFEFaqTopList extends \Contao\ModuleFaqList
 
 		$this->Template->faq = $arrFaq;
 	}
-  */
 }
