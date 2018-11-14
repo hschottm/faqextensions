@@ -3,6 +3,8 @@
 namespace Hschottm\FaqExtensionsBundle;
 use Psr\Log\LogLevel;
 use Contao\CoreBundle\Monolog\ContaoContext;
+use Contao\ModuleFaqPage;
+use Contao\FaqModel;
 
 class ModuleFEFaqPage extends \Contao\ModuleFaqPage
 {
@@ -10,7 +12,7 @@ class ModuleFEFaqPage extends \Contao\ModuleFaqPage
 	{
 		\Contao\ModuleFaqPage::compile();
 
-    $objFaq = \FaqModel::findPublishedByPids($this->faq_categories);
+    $objFaq = \Contao\FaqModel::findPublishedByPids($this->faq_categories);
 
 		if ($objFaq !== null)
 		{
