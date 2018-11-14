@@ -10,6 +10,8 @@ class ModuleFEFaqPage extends \Contao\ModuleFaqPage
 {
 	protected function compile()
 	{
+    \System::log('FAQ Page compile', __METHOD__, TL_GENERAL);
+
 		\Contao\ModuleFaqPage::compile();
 
     $objFaq = \Contao\FaqModel::findPublishedByPids($this->faq_categories);
