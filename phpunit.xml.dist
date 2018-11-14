@@ -1,0 +1,5 @@
+<testsuites>
+    <testsuite name="Faq Extensions Bundle">
+        <directory>./tests</directory>
+    </testsuite>
+</testsuites>
