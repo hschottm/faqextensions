@@ -2,12 +2,13 @@
 
 namespace Hschottm\FaqExtensionsBundle;
 
-class ModuleFEFaqRecommendedList extends \Contao\ModuleFaqList
+class ModuleFEFaqRecommendedList extends \ModuleFaqList
 {
 	protected $strTemplate = 'mod_faqlist_top';
 
 	public function generate()
 	{
+    \System::log('Recommended list generate', __METHOD__, TL_GENERAL);
 		if (TL_MODE == 'BE')
 		{
 			$objTemplate = new \BackendTemplate('be_wildcard');
@@ -33,6 +34,7 @@ class ModuleFEFaqRecommendedList extends \Contao\ModuleFaqList
 
 	protected function compile()
 	{
+    \System::log('Recommended list compile', __METHOD__, TL_GENERAL);
 		$objFaq = \Hschottm\FaqExtensionsBundle\FEFaqModel::findPublishedByRecommendation(array("order" => $this->faq_sortorder, "limit" => (($this->faq_limit > 0) ? $this->faq_limit : 10)));
 
 		if ($objFaq === null)
