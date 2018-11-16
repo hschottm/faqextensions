@@ -8,7 +8,7 @@
  * @see	      https://github.com/hschottm/faqextensions
  */
 
-namespace Hschottm\FaqExtensions\DependencyInjection;
+namespace Hschottm\FaqExtensionsBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
