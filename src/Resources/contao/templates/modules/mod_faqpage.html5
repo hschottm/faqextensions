@@ -1,0 +1,54 @@
+<?php \System::loadLanguageFile('tl_faq'); ?>
+<?php $this->extend('block_unsearchable'); ?>
+
+<?php $this->block('content'); ?>
+
+  <?php foreach($this->faq as $category): ?>
+    <article class="<?= $category['class'] ?>">
+      <h2><?= $category['headline'] ?></h2>
+
+      <?php foreach ($category['items'] as $faq): ?>
+        <section class="<?= $faq->class ?>">
+          <h3 id="<?= $faq->alias ?>"><?= $faq->question ?></h3>
+          <div class="ce_text block">
+
+            <?php if (!$faq->addBefore): ?>
+              <?= $faq->answer ?>
+            <?php endif; ?>
+
+            <?php if ($faq->addImage): ?>
+              <?php $this->insert('image', (array) $faq); ?>
+            <?php endif; ?>
+
+            <?php if ($faq->addBefore): ?>
+              <?= $faq->answer ?>
+            <?php endif; ?>
+
+          </div>
+
+          <?php if ($faq->enclosure): ?>
+            <ul class="enclosure">
+              <?php foreach ($faq->enclosure as $enclosure): ?>
+                <li class="download-element ext-<?= $enclosure['extension'] ?>">
+                  <a href="<?= $enclosure['href'] ?>" title="<?= $enclosure['title'] ?>"><?= $enclosure['link'] ?> <span class="size">(<?= $enclosure['filesize'] ?>)</span></a>
+                </li>
+              <?php endforeach; ?>
+            </ul>
+          <?php endif; ?>
+
+          <p class="info"><?= $faq->info ?></p>
+
+          <?php if ($faq->showhelpful): ?>
+            <div class="helpful">
+              <div><?php echo sprintf($GLOBALS['TL_LANG']['tl_faq']['nOutofmFoundThisArticleHelpful'], $faq->helpful, $faq->helpful + $faq->nothelpful); ?></div>
+              <div> <?= $GLOBALS['TL_LANG']['tl_faq']['WasThisArticleHelpful'] ?> <a href="{{faq_helpful_url::<?= $faq->alias ?>}}"><?= $GLOBALS['TL_LANG']['MSC']['yes'] ?></a> | <a href="{{faq_nothelpful_url::<?= $faq->alias ?>}}"><?= $GLOBALS['TL_LANG']['MSC']['no'] ?></a></div>
+            </div>
+          <?php endif; ?>
+        </section>
+      <?php endforeach; ?>
+
+      <p class="toplink"><a href="<?= $this->request ?>#top"><?= $this->topLink ?></a></p>
+    </article>
+  <?php endforeach; ?>
+
+<?php $this->endblock(); ?>

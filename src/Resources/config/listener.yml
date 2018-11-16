@@ -1,0 +1,6 @@
+services:
+    contao_faqextensions.listener.insert_tags:
+        class: Hschottm\FaqExtensionsBundle\EventListener\InsertTagsListener
+        arguments:
+            - "@contao.framework"
+        public: true

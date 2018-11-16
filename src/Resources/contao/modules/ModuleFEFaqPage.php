@@ -10,8 +10,6 @@ class ModuleFEFaqPage extends \Contao\ModuleFaqPage
 {
 	protected function compile()
 	{
-    \System::log('FAQ Page compile', __METHOD__, TL_GENERAL);
-
 		\Contao\ModuleFaqPage::compile();
 
     $objFaq = \Contao\FaqModel::findPublishedByPids($this->faq_categories);
@@ -20,7 +18,20 @@ class ModuleFEFaqPage extends \Contao\ModuleFaqPage
 		{
 			while ($objFaq->next())
 			{
-				$objFaq->viewcount++;
+        $votecalled = false;
+        if (\Environment::get('vote'))
+        {
+          $votecalled = true;
+          if (intval(\Environment::get('vote')) == 1)
+          {
+            $objFaq->helpful++;
+          }
+          else if (intval(\Environment::get('vote')) == -1)
+          {
+            $objFaq->nothelpful++;
+          }
+        }
+        if (!$votecalled) $objFaq->viewcount++;
 				$objFaq->save();
 			}
 		}
