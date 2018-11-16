@@ -33,7 +33,7 @@ class ModuleFEFaqRecommendedList extends \ModuleFaqList
 
 
 	protected function compile()
-	{echo "Ho";
+	{
     \System::log('Recommended list compile', __METHOD__, TL_GENERAL);
 		$objFaq = \Hschottm\FaqExtensionsBundle\FEFaqModel::findPublishedByRecommendation(array("order" => $this->faq_sortorder, "limit" => (($this->faq_limit > 0) ? $this->faq_limit : 10)));
 

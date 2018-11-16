@@ -21,7 +21,7 @@ class InsertTagsListener
      */
     private $supportedTags = [
       'faq_helpful_url',
-      'faq_nothelpful_url',
+      'faq_nothelpful_url'
     ];
 
     /**
