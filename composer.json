@@ -33,11 +33,6 @@
 		"psr-4": {
 			"Hschottm\\FaqExtensionsBundle\\": "src/"
 		},
-    "autoload-dev": {
-        "psr-4": {
-            "Hschottm\\FaqExtensionsBundle\\Tests\\": "tests/"
-        }
-    },
     "classmap": [
           "src/Resources/contao/"
   	    ],
@@ -47,6 +42,11 @@
           "src/Resources/contao/languages/",
           "src/Resources/contao/templates/"
   	    ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Hschottm\\FaqExtensionsBundle\\Tests\\": "tests/"
+        }
     },
     "extra":{
       "contao-manager-plugin": "Hschottm\\FaqExtensionsBundle\\ContaoManager\\Plugin"
