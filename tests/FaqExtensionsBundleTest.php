@@ -46,12 +46,11 @@ class FaqExtensionsBundleTest extends TestCase
    */
   public function testRegistersTheInsertTagsListener()
   {
-      $this->assertTrue($this->container->has('contao_faqextensions.listener.insert_tags'));
+    $this->assertTrue($this->container->has('contao_faqextensions.listener.insert_tags'));
+    $definition = $this->container->getDefinition('contao_faqextensions.listener.insert_tags');
 
-      $definition = $this->container->getDefinition('contao_faqextensions.listener.insert_tags');
-
-      $this->assertSame(InsertTagsListener::class, $definition->getClass());
-      $this->assertTrue($definition->isPublic());
-      $this->assertSame('contao.framework', (string) $definition->getArgument(0));
+    $this->assertSame(InsertTagsListener::class, $definition->getClass());
+    $this->assertTrue($definition->isPublic());
+    $this->assertSame('contao.framework', (string) $definition->getArgument(0));
   }
 }

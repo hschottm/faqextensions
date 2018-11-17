@@ -8,32 +8,63 @@ use Contao\FaqModel;
 
 class ModuleFEFaqPage extends \Contao\ModuleFaqPage
 {
+  private function http_strip_query_param($url, $param)
+  {
+    $pieces = parse_url($url);
+    if (!$pieces['query']) {
+        return $url;
+    }
+
+    $query = [];
+    parse_str($pieces['query'], $query);
+    if (!isset($query[$param])) {
+        return $url;
+    }
+
+    unset($query[$param]);
+    $pieces['query'] = http_build_query($query);
+    $result = $pieces['path'];
+    if ($pieces['query'])
+    {
+      $result .= "?";
+    }
+    $result .= $pieces['query'];
+    return $result;
+  }
+
 	protected function compile()
 	{
-		\Contao\ModuleFaqPage::compile();
-
     $objFaq = \Contao\FaqModel::findPublishedByPids($this->faq_categories);
-
 		if ($objFaq !== null)
 		{
 			while ($objFaq->next())
 			{
-        $votecalled = false;
-        if (\Environment::get('vote'))
+        if (\Input::get('vote'))
         {
-          $votecalled = true;
-          if (intval(\Environment::get('vote')) == 1)
+          $alias = \Input::get('tl_faq');
+          if (strcmp($alias, $objFaq->alias) == 0)
           {
-            $objFaq->helpful++;
-          }
-          else if (intval(\Environment::get('vote')) == -1)
-          {
-            $objFaq->nothelpful++;
+            $votecalled = true;
+            if (intval(\Input::get('vote')) == 1)
+            {
+              $objFaq->helpful++;
+            }
+            else if (intval(\Input::get('vote')) == -1)
+            {
+              $objFaq->nothelpful++;
+            }
+            $requestUri = \Environment::get('requestUri');
+            $requestUri = $this->http_strip_query_param($requestUri, "vote");
+            $requestUri = $this->http_strip_query_param($requestUri, "tl_faq");
+            $objFaq->save();
+            \Controller::redirect($requestUri);
           }
         }
-        if (!$votecalled) $objFaq->viewcount++;
+        $objFaq->viewcount++;
 				$objFaq->save();
 			}
 		}
+
+		\Contao\ModuleFaqPage::compile();
 	}
 }

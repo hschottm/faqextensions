@@ -45,7 +45,6 @@ class InsertTagsListener
     {
         $elements = explode('::', $tag);
         $key = strtolower($elements[0]);
-
         if (!\in_array($key, $this->supportedTags, true)) {
             return false;
         }
@@ -73,18 +72,7 @@ class InsertTagsListener
      */
     private function generateUrl(FaqModel $faq)
     {
-        /** @var PageModel $jumpTo */
-        if (
-            !($category = $faq->getRelated('pid')) instanceof FaqCategoryModel
-            || !(($jumpTo = $category->getRelated('jumpTo')) instanceof PageModel)
-        ) {
-            return false;
-        }
-
-        /** @var Config $config */
-        $config = $this->framework->getAdapter(Config::class);
-
-        return $jumpTo->getFrontendUrl(($config->get('useAutoItem') ? '/' : '/items/').($faq->alias ?: $faq->id));
+      return \Environment::get('uri');
     }
 
     /**
@@ -100,9 +88,21 @@ class InsertTagsListener
     {
         switch ($key) {
           case 'faq_helpful_url':
-              return $url + "&amp;vote=1";
+            if (\Environment::get('queryString'))
+            {
+              return $url . "&amp;vote=1&amp;tl_faq=" . $faq->alias;
+            }
+            else {
+              return $url . "?vote=1&amp;tl_faq=" . $faq->alias;
+            }
           case 'faq_nothelpful_url':
-          return $url + "&amp;vote=-1";
+          if (\Environment::get('queryString'))
+          {
+            return $url . "&amp;vote=-1&amp;tl_faq=" . $faq->alias;
+          }
+          else {
+            return $url . "?vote=-1&amp;tl_faq=" . $faq->alias;
+          }
         }
 
         return false;
