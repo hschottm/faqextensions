@@ -65,6 +65,7 @@ class ModuleFEFaqReader extends \Contao\ModuleFaqReader
       $this->Template->showhelpful = $objFaq->showhelpful;
       $this->Template->helpful = $objFaq->helpful;
       $this->Template->nothelpful = $objFaq->nothelpful;
+      $this->Template->alias = $objFaq->alias;
     }
 	}
 }
