@@ -71,4 +71,27 @@ class FEFaqModel extends \Contao\FaqModel
 		return static::findBy($arrColumns, 1, $arrOptions);
 	}
 
+  /**
+	 * Find all published FAQs by their recommendation flag
+	 *
+	 * @param array $arrOptions An optional options array
+	 *
+	 * @return \Model\Collection|\FaqModel|null A collection of models or null if there are no FAQs
+	 */
+
+	public static function findPublishedByHelpful(array $arrOptions=array())
+	{
+		$t = static::$strTable;
+		$arrColumns = array("($t.helpful>0 OR $t.nothelpful>0)");
+
+		if (!BE_USER_LOGGED_IN)
+		{
+			$arrColumns[] = "$t.published='1'";
+		}
+
+    $arrOptions['order'] = "($t.helpful-$t.nothelpful) ASC";
+
+
+		return static::findBy($arrColumns, 0, $arrOptions);
+	}
 }

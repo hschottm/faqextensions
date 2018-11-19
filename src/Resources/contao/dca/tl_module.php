@@ -2,6 +2,7 @@
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['faqtoplist']   = '{title_legend},name,headline,type;{config_legend},faq_limit,faq_categories,faq_readerModule;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['faqrecommendedlist']   = '{title_legend},name,headline,type;{config_legend},faq_limit,faq_sortorder,faq_categories,faq_readerModule;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['faqhelpfullist']   = '{title_legend},name,headline,type;{config_legend},faq_limit,faq_categories,faq_readerModule;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['faq_limit'] = array
 (

@@ -1,0 +1,11 @@
+<?php $this->extend('block_unsearchable'); ?>
+
+<?php $this->block('content'); ?>
+
+    <ul class="<?= $this->class ?>">
+      <?php foreach ($this->faqList as $faq): ?>
+        <li class="<?= $faq['class'] ?>"><a href="<?= $faq['href'] ?>" title="<?= $faq['title'] ?>"><?= $faq['question'] ?></a></li>
+      <?php endforeach; ?>
+    </ul>
+
+<?php $this->endblock(); ?>
