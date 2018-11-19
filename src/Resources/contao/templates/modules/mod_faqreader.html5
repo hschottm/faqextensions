@@ -1,0 +1,59 @@
+<?php \System::loadLanguageFile('tl_faq'); ?>
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+  <?php if ($this->error): ?>
+    <?= $this->error ?>
+  <?php else: ?>
+    <h1><?= $this->question ?></h1>
+    <div class="ce_text block">
+
+      <?php if (!$this->addBefore): ?>
+        <?= $this->answer ?>
+      <?php endif; ?>
+
+      <?php if ($this->addImage): ?>
+        <?php $this->insert('image', $this->arrData); ?>
+      <?php endif; ?>
+
+      <?php if ($this->addBefore): ?>
+        <?= $this->answer ?>
+      <?php endif; ?>
+
+    </div>
+
+    <?php if ($this->enclosure): ?>
+      <ul class="enclosure">
+        <?php foreach ($this->enclosure as $enclosure): ?>
+          <li class="download-element ext-<?= $enclosure['extension'] ?>">
+             <a href="<?= $enclosure['href'] ?>" title="<?= $enclosure['title'] ?>"><?= $enclosure['link'] ?> <span class="size">(<?= $enclosure['filesize'] ?>)</span></a>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+    <?php endif; ?>
+
+    <p class="info"><?= $this->info ?></p>
+
+    <?php if ($this->showhelpful): ?>
+      <div class="helpful">
+        <div><?php echo sprintf($GLOBALS['TL_LANG']['tl_faq']['nOutofmFoundThisArticleHelpful'], $this->helpful, $this->helpful + $this->nothelpful); ?></div>
+        <div> <?= $GLOBALS['TL_LANG']['tl_faq']['WasThisArticleHelpful'] ?> <a href="{{faq_helpful_url::<?= $this->alias ?>}}"><?= $GLOBALS['TL_LANG']['MSC']['yes'] ?></a> | <a href="{{faq_nothelpful_url::<?= $this->alias ?>}}"><?= $GLOBALS['TL_LANG']['MSC']['no'] ?></a></div>
+      </div>
+    <?php endif; ?>
+
+    <!-- indexer::stop -->
+    <p class="back"><a href="<?= $this->referer ?>" title="<?= $this->back ?>"><?= $this->back ?></a></p>
+    <!-- indexer::continue -->
+  <?php endif; ?>
+
+  <?php if ($this->allowComments): ?>
+    <div class="ce_comments block">
+      <<?= $this->hlc ?>><?= $this->addComment ?></<?= $this->hlc ?>>
+      <?= implode('', $this->comments) ?>
+      <?= $this->pagination ?>
+      <?php $this->insert('mod_comment_form', $this->arrData); ?>
+    </div>
+  <?php endif; ?>
+
+<?php $this->endblock(); ?>

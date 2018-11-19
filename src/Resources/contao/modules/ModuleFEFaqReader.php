@@ -30,7 +30,7 @@ class ModuleFEFaqReader extends \Contao\ModuleFaqReader
 
 	protected function compile()
 	{
-    $objFaq = \Hschottm\FaqExtensionsBundle::findPublishedByParentAndIdOrAlias(\Input::get('items'), $this->faq_categories);
+    $objFaq = \Contao\FaqModel::findPublishedByParentAndIdOrAlias(\Input::get('items'), $this->faq_categories);
 		if (null !== $objFaq)
 		{
       if (\Input::get('vote'))
@@ -59,5 +59,12 @@ class ModuleFEFaqReader extends \Contao\ModuleFaqReader
 		}
 
 		\Contao\ModuleFaqReader::compile();
+
+    if (null !== $objFaq)
+		{
+      $this->Template->showhelpful = $objFaq->showhelpful;
+      $this->Template->helpful = $objFaq->helpful;
+      $this->Template->nothelpful = $objFaq->nothelpful;
+    }
 	}
 }
