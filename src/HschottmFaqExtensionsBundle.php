@@ -12,13 +12,13 @@ declare(strict_types=1);
 
 namespace Hschottm\FaqExtensionsBundle;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Hschottm\FaqExtensionsBundle\DependencyInjection\FaqExtensionsExtension;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class HschottmFaqExtensionsBundle extends Bundle
 {
-  public function getContainerExtension()
-  {
-      return new FaqExtensionsExtension();
-  }
+    public function getContainerExtension()
+    {
+        return new FaqExtensionsExtension();
+    }
 }

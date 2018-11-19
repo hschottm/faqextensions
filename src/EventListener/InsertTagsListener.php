@@ -1,13 +1,17 @@
 <?php
 
+/*
+ * @copyright  Helmut Schottmüller 2018 <http://github.com/hschottm>
+ * @author     Helmut Schottmüller (hschottm)
+ * @package    FaqExtensions
+ * @license    LGPL-3.0-or-later
+ * @see	      https://github.com/hschottm/faqextensions
+ */
+
 namespace Hschottm\FaqExtensionsBundle\EventListener;
 
-use Contao\Config;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
-use Contao\FaqCategoryModel;
 use Contao\FaqModel;
-use Contao\PageModel;
-use Contao\StringUtil;
 
 class InsertTagsListener
 {
@@ -21,7 +25,7 @@ class InsertTagsListener
      */
     private $supportedTags = [
       'faq_helpful_url',
-      'faq_nothelpful_url'
+      'faq_nothelpful_url',
     ];
 
     /**
@@ -72,7 +76,7 @@ class InsertTagsListener
      */
     private function generateUrl(FaqModel $faq)
     {
-      return \Environment::get('uri');
+        return \Environment::get('uri');
     }
 
     /**
@@ -88,21 +92,18 @@ class InsertTagsListener
     {
         switch ($key) {
           case 'faq_helpful_url':
-            if (\Environment::get('queryString'))
-            {
-              return $url . "&amp;vote=1&amp;tl_faq=" . $faq->alias;
+            if (\Environment::get('queryString')) {
+                return $url.'&amp;vote=1&amp;tl_faq='.$faq->alias;
             }
-            else {
-              return $url . "?vote=1&amp;tl_faq=" . $faq->alias;
-            }
+
+              return $url.'?vote=1&amp;tl_faq='.$faq->alias;
+
           case 'faq_nothelpful_url':
-          if (\Environment::get('queryString'))
-          {
-            return $url . "&amp;vote=-1&amp;tl_faq=" . $faq->alias;
+          if (\Environment::get('queryString')) {
+              return $url.'&amp;vote=-1&amp;tl_faq='.$faq->alias;
           }
-          else {
-            return $url . "?vote=-1&amp;tl_faq=" . $faq->alias;
-          }
+
+            return $url.'?vote=-1&amp;tl_faq='.$faq->alias;
         }
 
         return false;
