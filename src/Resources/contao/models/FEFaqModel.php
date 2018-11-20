@@ -72,7 +72,7 @@ class FEFaqModel extends \Contao\FaqModel
 	}
 
   /**
-	 * Find all published FAQs by their recommendation flag
+	 * Find all published FAQs by their helpful votes
 	 *
 	 * @param array $arrOptions An optional options array
 	 *
@@ -90,6 +90,30 @@ class FEFaqModel extends \Contao\FaqModel
 		}
 
     $arrOptions['order'] = "($t.helpful-$t.nothelpful) ASC";
+
+
+		return static::findBy($arrColumns, 0, $arrOptions);
+	}
+
+  /**
+	 * Find all published FAQs by their creation date
+	 *
+	 * @param array $arrOptions An optional options array
+	 *
+	 * @return \Model\Collection|\FaqModel|null A collection of models or null if there are no FAQs
+	 */
+
+	public static function findPublishedByDate(array $arrOptions=array())
+	{
+		$t = static::$strTable;
+		$arrColumns = array();
+
+		if (!BE_USER_LOGGED_IN)
+		{
+			$arrColumns[] = "$t.published='1'";
+		}
+
+    $arrOptions['order'] = "$t.tstamp DESC";
 
 
 		return static::findBy($arrColumns, 0, $arrOptions);
