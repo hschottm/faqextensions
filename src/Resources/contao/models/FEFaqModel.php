@@ -116,7 +116,7 @@ class FEFaqModel extends \Contao\FaqModel
 	 * @return \Model\Collection|\FaqModel|null A collection of models or null if there are no FAQs
 	 */
 
-	public static function findPublishedByHelpfulAndPids(array $arrOptions=array())
+	public static function findPublishedByHelpfulAndPids($arrPids, $intLimit=0, $intOffset=0)
 	{
     $t = static::$strTable;
 		$arrColumns = array("$t.pid IN(" . implode(',', array_map('\intval', $arrPids)) . ")");
