@@ -38,7 +38,7 @@ class ModuleFEFaqTopList extends ModuleFEFaqList
 			$limit = $this->numberOfItems;
 		}
 
-    $intTotal = \FaqModel::countPublishedByPids($this->faq_categories);
+    $intTotal = \Hschottm\FaqExtensionsBundle\FEFaqModel::countPublishedByPids($this->faq_categories);
 
     if ($intTotal < 1)
 		{
@@ -84,11 +84,6 @@ class ModuleFEFaqTopList extends ModuleFEFaqList
 			$this->Template->pagination = $objPagination->generate("\n  ");
 		}
 
-    $params = array();
-    if ($this->numberOfItems > 0)
-    {
-      $params['limit'] = $this->numberOfItems;
-    }
 		$objFaq = \Hschottm\FaqExtensionsBundle\FEFaqModel::findPublishedByViewCountAndPids($this->faq_categories, ($limit ?: 0), $offset);
 
 		// Add the articles

@@ -2,7 +2,9 @@
 
 namespace Hschottm\FaqExtensionsBundle;
 
-class ModuleFEFaqHelpfulList extends \Contao\ModuleFaqList
+use Hschottm\FaqExtensionsBundle\ModuleFEFaqList;
+
+class ModuleFEFaqHelpfulList extends ModuleFEFaqList
 {
 	protected $strTemplate = 'mod_faqlist_helpful';
 
@@ -21,55 +23,73 @@ class ModuleFEFaqHelpfulList extends \Contao\ModuleFaqList
 			return $objTemplate->parse();
 		}
 
-		// Show the FAQ reader if an item has been selected
-		if ($this->faq_readerModule > 0 && (isset($_GET['items']) || (\Config::get('useAutoItem') && isset($_GET['auto_item']))))
-		{
-			return $this->getFrontendModule($this->faq_readerModule, $this->strColumn);
-		}
-
 		return parent::generate();
 	}
 
 
 	protected function compile()
 	{
-    $params = array();
-    if ($this->numberOfItems > 0)
-    {
-      $params['limit'] = $this->numberOfItems;
-    }
-		$objFaq = \Hschottm\FaqExtensionsBundle\FEFaqModel::findPublishedByHelpful($params);
+    $limit = null;
+		$offset = 0; //(int) $this->skipFirst;
 
-		if ($objFaq === null)
+		// Maximum number of items
+		if ($this->numberOfItems > 0)
 		{
-			$this->Template->faq = array();
+			$limit = $this->numberOfItems;
+		}
 
+    $intTotal = \Hschottm\FaqExtensionsBundle\FEFaqModel::countPublishedByPids($this->faq_categories);
+
+    if ($intTotal < 1)
+		{
+      $this->Template->faq = array();
+  		$this->Template->empty = $GLOBALS['TL_LANG']['MSC']['emptyList'];
 			return;
 		}
 
-		$arrFaq = array();
+    $total = $intTotal - $offset;
 
-		// Add FAQs
-		while ($objFaq->next())
+    // Split the results
+		if ($this->perPage > 0 && (!isset($limit) || $this->numberOfItems > $this->perPage))
 		{
-			$arrTemp = $objFaq->row();
-			$arrTemp['title'] = specialchars($objFaq->question, true);
-			$arrTemp['href'] = $this->generateFaqLink($objFaq);
+			// Adjust the overall limit
+			if (isset($limit))
+			{
+				$total = min($limit, $total);
+			}
 
-			$objPid = $objFaq->getRelated('pid');
+			// Get the current page
+			$id = 'page_n' . $this->id;
+			$page = (\Input::get($id) !== null) ? \Input::get($id) : 1;
 
-			array_push($arrFaq, $arrTemp);
+			// Do not index or cache the page if the page number is outside the range
+			if ($page < 1 || $page > max(ceil($total/$this->perPage), 1))
+			{
+				throw new PageNotFoundException('Page not found: ' . \Environment::get('uri'));
+			}
+
+			// Set limit and offset
+			$limit = $this->perPage;
+			$offset += (max($page, 1) - 1) * $this->perPage;
+			$skip = (int) $this->skipFirst;
+
+			// Overall limit
+			if ($offset + $limit > $total + $skip)
+			{
+				$limit = $total + $skip - $offset;
+			}
+
+			// Add the pagination menu
+			$objPagination = new \Pagination($total, $this->perPage, \Config::get('maxPaginationLinks'), $id);
+			$this->Template->pagination = $objPagination->generate("\n  ");
 		}
 
-		$faq_count = 0;
-		$faq_limit = count($arrFaq);
+		$objFaq = \Hschottm\FaqExtensionsBundle\FEFaqModel::findPublishedByHelpfulAndPids($this->faq_categories, ($limit ?: 0), $offset);
 
-		// Add classes
-		foreach ($arrFaq as $k=>$v)
+		// Add the articles
+		if ($objFaq !== null)
 		{
-			$arrFaq[$k]['class'] = trim(((++$faq_count == 1) ? ' first' : '') . (($faq_count >= $faq_limit) ? ' last' : '') . ((($faq_count % 2) == 0) ? ' odd' : ' even'));
+			$this->Template->faq = $this->parseFaq($objFaq);
 		}
-
-		$this->Template->faqList = $arrFaq;
 	}
 }

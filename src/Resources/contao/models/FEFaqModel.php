@@ -61,20 +61,26 @@ class FEFaqModel extends \Contao\FaqModel
 	/**
 	 * Find all published FAQs by their recommendation flag
 	 *
+   * @param array   $arrPids     An array of faq archive IDs
+	 * @param integer $intLimit    An optional limit
+	 * @param integer $intOffset   An optional offset
 	 * @param array $arrOptions An optional options array
 	 *
 	 * @return \Model\Collection|\FaqModel|null A collection of models or null if there are no FAQs
 	 */
 
-	public static function findPublishedByRecommendation(array $arrOptions=array())
+	public static function findPublishedByRecommendationAndPids($arrPids, $intLimit=0, $intOffset=0, array $arrOptions=array())
 	{
-		$t = static::$strTable;
-		$arrColumns = array("$t.recommended=?");
+    $t = static::$strTable;
+		$arrColumns = array("$t.pid IN(" . implode(',', array_map('\intval', $arrPids)) . ")");
 
 		if (!BE_USER_LOGGED_IN)
 		{
 			$arrColumns[] = "$t.published='1'";
 		}
+
+    $arrOptions['limit']  = $intLimit;
+		$arrOptions['offset'] = $intOffset;
 
 		if (strcmp($arrOptions['order'], 'sort_alpha_desc') == 0)
 		{
@@ -97,54 +103,60 @@ class FEFaqModel extends \Contao\FaqModel
 			$arrOptions['order'] = "$t.question DESC";
 		}
 
-		return static::findBy($arrColumns, 1, $arrOptions);
+		return static::findBy($arrColumns, null, $arrOptions);
 	}
 
   /**
 	 * Find all published FAQs by their helpful votes
 	 *
-	 * @param array $arrOptions An optional options array
+   * @param array   $arrPids     An array of faq archive IDs
+	 * @param integer $intLimit    An optional limit
+	 * @param integer $intOffset   An optional offset
 	 *
 	 * @return \Model\Collection|\FaqModel|null A collection of models or null if there are no FAQs
 	 */
 
-	public static function findPublishedByHelpful(array $arrOptions=array())
+	public static function findPublishedByHelpfulAndPids(array $arrOptions=array())
 	{
-		$t = static::$strTable;
-		$arrColumns = array("($t.helpful>0 OR $t.nothelpful>0)");
+    $t = static::$strTable;
+		$arrColumns = array("$t.pid IN(" . implode(',', array_map('\intval', $arrPids)) . ")");
 
 		if (!BE_USER_LOGGED_IN)
 		{
 			$arrColumns[] = "$t.published='1'";
 		}
 
+    $arrOptions['limit']  = $intLimit;
+		$arrOptions['offset'] = $intOffset;
     $arrOptions['order'] = "($t.helpful-$t.nothelpful) DESC";
 
-
-		return static::findBy($arrColumns, 0, $arrOptions);
+		return static::findBy($arrColumns, null, $arrOptions);
 	}
 
   /**
 	 * Find all published FAQs by their creation date
 	 *
-	 * @param array $arrOptions An optional options array
+   * @param array   $arrPids     An array of faq archive IDs
+	 * @param integer $intLimit    An optional limit
+	 * @param integer $intOffset   An optional offset
 	 *
 	 * @return \Model\Collection|\FaqModel|null A collection of models or null if there are no FAQs
 	 */
 
-	public static function findPublishedByDate(array $arrOptions=array())
+	public static function findPublishedByDateAndPids($arrPids, $intLimit=0, $intOffset=0)
 	{
-		$t = static::$strTable;
-		$arrColumns = array();
+    $t = static::$strTable;
+		$arrColumns = array("$t.pid IN(" . implode(',', array_map('\intval', $arrPids)) . ")");
 
 		if (!BE_USER_LOGGED_IN)
 		{
 			$arrColumns[] = "$t.published='1'";
 		}
 
+    $arrOptions['limit']  = $intLimit;
+		$arrOptions['offset'] = $intOffset;
     $arrOptions['order'] = "$t.tstamp DESC";
 
-
-		return static::findBy($arrColumns, 0, $arrOptions);
+		return static::findBy($arrColumns, null, $arrOptions);
 	}
 }

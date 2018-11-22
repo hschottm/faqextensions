@@ -2,7 +2,7 @@
 
 <?php $this->block('content'); ?>
 
-<?php if (empty($this->articles)): ?>
+<?php if (empty($this->faq)): ?>
   <p class="empty"><?= $this->empty ?></p>
 <?php else: ?>
   <ul class="<?= $this->class ?>">
