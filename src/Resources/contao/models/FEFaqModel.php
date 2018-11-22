@@ -128,7 +128,7 @@ class FEFaqModel extends \Contao\FaqModel
 
     $arrOptions['limit']  = $intLimit;
 		$arrOptions['offset'] = $intOffset;
-    $arrOptions['order'] = "($t.helpful) DESC";
+    $arrOptions['order'] = "($t.helpful-$t.nothelpful) DESC";
 
 		return static::findBy($arrColumns, null, $arrOptions);
 	}
