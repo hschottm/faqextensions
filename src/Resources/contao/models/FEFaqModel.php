@@ -89,7 +89,7 @@ class FEFaqModel extends \Contao\FaqModel
 			$arrColumns[] = "$t.published='1'";
 		}
 
-    $arrOptions['order'] = "($t.helpful-$t.nothelpful) ASC";
+    $arrOptions['order'] = "($t.helpful-$t.nothelpful) DESC";
 
 
 		return static::findBy($arrColumns, 0, $arrOptions);
