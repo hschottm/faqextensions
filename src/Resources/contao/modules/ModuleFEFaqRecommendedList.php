@@ -8,7 +8,6 @@ class ModuleFEFaqRecommendedList extends \ModuleFaqList
 
 	public function generate()
 	{
-    \System::log('Recommended list generate', __METHOD__, TL_GENERAL);
 		if (TL_MODE == 'BE')
 		{
 			$objTemplate = new \BackendTemplate('be_wildcard');
@@ -34,8 +33,13 @@ class ModuleFEFaqRecommendedList extends \ModuleFaqList
 
 	protected function compile()
 	{
-    \System::log('Recommended list compile', __METHOD__, TL_GENERAL);
-		$objFaq = \Hschottm\FaqExtensionsBundle\FEFaqModel::findPublishedByRecommendation(array("order" => $this->faq_sortorder, "limit" => (($this->faq_limit > 0) ? $this->faq_limit : 10)));
+    $params = array();
+    if ($this->numberOfItems > 0)
+    {
+      $params['limit'] = $this->numberOfItems;
+    }
+    $params['order'] = $this->faq_sortorder;
+		$objFaq = \Hschottm\FaqExtensionsBundle\FEFaqModel::findPublishedByRecommendation($params);
 
 		if ($objFaq === null)
 		{

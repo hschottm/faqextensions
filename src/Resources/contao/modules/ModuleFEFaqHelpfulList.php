@@ -33,7 +33,12 @@ class ModuleFEFaqHelpfulList extends \Contao\ModuleFaqList
 
 	protected function compile()
 	{
-		$objFaq = \Hschottm\FaqExtensionsBundle\FEFaqModel::findPublishedByHelpful(array("limit" => (($this->faq_limit > 0) ? $this->faq_limit : 10)));
+    $params = array();
+    if ($this->numberOfItems > 0)
+    {
+      $params['limit'] = $this->numberOfItems;
+    }
+		$objFaq = \Hschottm\FaqExtensionsBundle\FEFaqModel::findPublishedByHelpful($params);
 
 		if ($objFaq === null)
 		{

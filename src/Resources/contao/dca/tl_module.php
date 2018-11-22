@@ -1,19 +1,9 @@
 <?php
 
-$GLOBALS['TL_DCA']['tl_module']['palettes']['faqtoplist']   = '{title_legend},name,headline,type;{config_legend},faq_limit,faq_categories,faq_readerModule;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
-$GLOBALS['TL_DCA']['tl_module']['palettes']['faqrecommendedlist']   = '{title_legend},name,headline,type;{config_legend},faq_limit,faq_sortorder,faq_categories,faq_readerModule;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
-$GLOBALS['TL_DCA']['tl_module']['palettes']['faqhelpfullist']   = '{title_legend},name,headline,type;{config_legend},faq_limit,faq_categories,faq_readerModule;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
-$GLOBALS['TL_DCA']['tl_module']['palettes']['faqrecentlist']   = '{title_legend},name,headline,type;{config_legend},faq_limit,faq_categories,faq_readerModule;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['faq_limit'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['faq_limit'],
-	'default'                 => '10',
-	'search'                  => true,
-	'inputType'               => 'text',
-	'eval'                    => array('maxlength'=>32, 'style' => 'width: 5em;', 'rgxp' => 'digit', 'tl_class'=>'long', 'decodeEntities' => true),
-	'sql'                     => "varchar(32) NOT NULL default '10'"
-);
+$GLOBALS['TL_DCA']['tl_module']['palettes']['faqtoplist']   = '{title_legend},name,headline,type;{config_legend},numberOfItems,perPage,faq_categories,faq_readerModule;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['faqrecommendedlist']   = '{title_legend},name,headline,type;{config_legend},numberOfItems,perPage,faq_sortorder,faq_categories,faq_readerModule;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['faqhelpfullist']   = '{title_legend},name,headline,type;{config_legend},numberOfItems,perPage,faq_categories,faq_readerModule;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['faqrecentlist']   = '{title_legend},name,headline,type;{config_legend},numberOfItems,perPage,faq_categories,faq_readerModule;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['faq_sortorder'] = array
 (
