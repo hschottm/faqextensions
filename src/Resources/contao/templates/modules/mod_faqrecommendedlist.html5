@@ -1,0 +1,16 @@
+<?php $this->extend('block_unsearchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<?php if (empty($this->faq)): ?>
+  <p class="empty"><?= $this->empty ?></p>
+<?php else: ?>
+  <ul class="<?= $this->class ?>">
+    <?php foreach ($this->faq as $faq): ?>
+      <li class="<?= $faq['class'] ?>"><a href="<?= $faq['href'] ?>" title="<?= $faq['title'] ?>"><?= $faq['question'] ?></a></li>
+    <?php endforeach; ?>
+  </ul>
+  <?= $this->pagination ?>
+<?php endif; ?>
+
+<?php $this->endblock(); ?>

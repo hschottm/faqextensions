@@ -6,7 +6,7 @@ use Hschottm\FaqExtensionsBundle\ModuleFEFaqList;
 
 class ModuleFEFaqHelpfulList extends ModuleFEFaqList
 {
-	protected $strTemplate = 'mod_faqlist_extended';
+	protected $strTemplate = 'mod_faqhelpfullist';
 
 	public function generate()
 	{
