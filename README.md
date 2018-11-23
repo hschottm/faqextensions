@@ -60,14 +60,16 @@ $GLOBALS['TL_DCA']['tl_faq']['fields']['showhelpful'] = array(
 ### Most frequently viewed FAQ list
 This module creates a list of the most frequently viewed FAQ articles ordered by their view count. You can limit the number of entries and use pagination for this list. The order of the FAQ articles is always descending by `viewcount` so the most fequently viewed entry is on top of the list.
 
-![most_frequent_module](https://cloud.githubusercontent.com/assets/873113/12032443/a51d6e44-ae18-11e5-9117-1eebd1e4a242.png)
+![faqexentensions_mostfrequent_list](https://user-images.githubusercontent.com/873113/48935951-a5c9a580-ef09-11e8-93e1-22b4559c3a0b.png)
 ### Recommended FAQ list
 This module creates a list of all FAQ articles marked as recommended. You can limit the number of entries and use pagination for this list and you can set the sorter order for the entries to alphabetical by FAQ title or by creation date of the FAQ entry, both ascending and descending.
 
-![recommended_module](https://cloud.githubusercontent.com/assets/873113/12032444/a51f9926-ae18-11e5-92b5-58f345e2a0df.png)
+![faqextensions_recommended_list](https://user-images.githubusercontent.com/873113/48935954-a5c9a580-ef09-11e8-9b02-5b52b52cea6b.png)
 ### Helpful FAQ list
 This module creates a list of the most helpful FAQ articles, odered by their helpful vote. You can limit the number of entries and use pagination for this list. The order of the FAQ articles is always descending by their helpfulness calculated by the sum of the helpful and not helpful votes. The not helpful votes count as negative values.
 
+![faqextensions_helpful_list](https://user-images.githubusercontent.com/873113/48935952-a5c9a580-ef09-11e8-9fec-ed3c7edb7e17.png)
 ### Recent FAQ list
 This module creates a list of all FAQ articles ordered descending by the most recently added article using the `tstamp` field of each article. You can limit the number of entries and use pagination for this list.
 
+![faqextensions_recent_list](https://user-images.githubusercontent.com/873113/48935953-a5c9a580-ef09-11e8-8d5e-85b78dcdb9f3.png)
