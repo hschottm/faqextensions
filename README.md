@@ -30,7 +30,7 @@ $GLOBALS['TL_DCA']['tl_faq']['fields']['recommended'] = array(
 	'sql'                     => "char(1) NOT NULL default ''"
 );
 ```
-![recommended_backend](https://cloud.githubusercontent.com/assets/873113/12032366/da35e33c-ae17-11e5-8071-535cd6ed054e.png)
+![faqextensions_expert_settings](https://user-images.githubusercontent.com/873113/48935073-a01e9080-ef06-11e8-83dd-26d129117d02.png)
 
 #### helpful, nothelpful, showhelpful
 `showhelpful` is a boolean field that can be checked in the backend for each FAQ article to show a helpful vote in the frontend for that article. Each helpful vote will increase the integer value of the `helpful` integer field, each not helpful vorte will increase the value of the `nothelpful`integer field. The module *Helpful FAQ list* lists all FAQ entries ordered by their helpful votes.
@@ -53,6 +53,8 @@ $GLOBALS['TL_DCA']['tl_faq']['fields']['showhelpful'] = array(
 	'sql'                     => "char(1) NOT NULL default ''"
 );
 ```
+
+![faqextensions_expert_settings](https://user-images.githubusercontent.com/873113/48935073-a01e9080-ef06-11e8-83dd-26d129117d02.png)
 
 ## Modules
 ### Most frequently viewed FAQ list
