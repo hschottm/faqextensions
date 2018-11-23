@@ -9,6 +9,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['faq_sortorder'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['faq_sortorder'],
 	'exclude'                 => true,
+  'eval'                    => array('tl_class'=>'w50'),
 	'inputType'               => 'select',
 	'options'                 => array('sort_alpha_asc', 'sort_alpha_desc', 'sort_created_desc', 'sort_created_asc'),
 	'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
