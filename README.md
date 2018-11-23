@@ -60,16 +60,16 @@ $GLOBALS['TL_DCA']['tl_faq']['fields']['showhelpful'] = array(
 ### Most frequently viewed FAQ list
 This module creates a list of the most frequently viewed FAQ articles ordered by their view count. You can limit the number of entries and use pagination for this list. The order of the FAQ articles is always descending by `viewcount` so the most fequently viewed entry is on top of the list.
 
-![faqexentensions_mostfrequent_list](https://user-images.githubusercontent.com/873113/48935951-a5c9a580-ef09-11e8-93e1-22b4559c3a0b.png)
+![faqexentensions_mostfrequent_list](https://user-images.githubusercontent.com/873113/48936106-1ec8fd00-ef0a-11e8-9ece-c2246dbc9d5e.png)
 ### Recommended FAQ list
 This module creates a list of all FAQ articles marked as recommended. You can limit the number of entries and use pagination for this list and you can set the sorter order for the entries to alphabetical by FAQ title or by creation date of the FAQ entry, both ascending and descending.
 
-![faqextensions_recommended_list](https://user-images.githubusercontent.com/873113/48935954-a5c9a580-ef09-11e8-9b02-5b52b52cea6b.png)
+![faqextensions_recommended_list](https://user-images.githubusercontent.com/873113/48936109-1f619380-ef0a-11e8-9307-b373a2acfd92.png)
 ### Helpful FAQ list
 This module creates a list of the most helpful FAQ articles, odered by their helpful vote. You can limit the number of entries and use pagination for this list. The order of the FAQ articles is always descending by their helpfulness calculated by the sum of the helpful and not helpful votes. The not helpful votes count as negative values.
 
-![faqextensions_helpful_list](https://user-images.githubusercontent.com/873113/48935952-a5c9a580-ef09-11e8-9fec-ed3c7edb7e17.png)
+![faqextensions_helpful_list](https://user-images.githubusercontent.com/873113/48936107-1ec8fd00-ef0a-11e8-86e0-5cde37ed8ff5.png)
 ### Recent FAQ list
 This module creates a list of all FAQ articles ordered descending by the most recently added article using the `tstamp` field of each article. You can limit the number of entries and use pagination for this list.
 
-![faqextensions_recent_list](https://user-images.githubusercontent.com/873113/48935953-a5c9a580-ef09-11e8-8d5e-85b78dcdb9f3.png)
+![faqextensions_recent_list](https://user-images.githubusercontent.com/873113/48936108-1ec8fd00-ef0a-11e8-8684-8194f70791e4.png)
