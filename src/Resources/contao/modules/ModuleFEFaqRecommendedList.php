@@ -84,7 +84,7 @@ class ModuleFEFaqRecommendedList extends ModuleFEFaqList
 			$this->Template->pagination = $objPagination->generate("\n  ");
 		}
 
-    $params = array('order' => $this->faq_sortorder;
+    $params = array('order' => $this->faq_sortorder);
 		$objFaq = \Hschottm\FaqExtensionsBundle\FEFaqModel::findPublishedByRecommendationAndPids($this->faq_categories, ($limit ?: 0), $offset, $params);
 
 		// Add the articles
