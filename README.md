@@ -1,3 +1,8 @@
+[![Latest Version on Packagist](http://img.shields.io/packagist/v/hschottm/faqextensions.svg?style=flat)](https://packagist.org/packages/friends-of-contao/contao-twitterreader)
+[![Installations via composer per month](http://img.shields.io/packagist/dm/hschottm/faqextensions.svg?style=flat)](https://packagist.org/packages/friends-of-contao/contao-twitterreader)
+[![Installations via composer total](http://img.shields.io/packagist/dt/hschottm/faqextensions.svg?style=flat)](https://packagist.org/packages/friends-of-contao/contao-twitterreader)
+
+
 # faqextensions
 faqextensions extends the FAQ bundle support in Contao. The extensions allow you to highlight very popular FAQ entries or your personal recommendations in the Contao frontend to make your FAQ section even better. This Contao bundle brings you the following improvements to the FAQ bundle:
 
