@@ -1,6 +1,6 @@
 {
   "name":"hschottm/faqextensions",
-  "description":"Extends the FAQ module support in Contao. The extensions allow you to highlight very popular FAQ entries or your personal recommendations in the Contao frontend to make your FAQ section even better.",
+  "description":"Extends the FAQ bundle in Contao. The bundle allows you to highlight very popular FAQ articles or your personal recommendations in the Contao frontend. It also introduces voting support for FAQ articles.",
   "keywords":["contao", "module", "extension", "faq", "helpful"],
   "type":"contao-bundle",
   "license":"LGPL-3.0+",
