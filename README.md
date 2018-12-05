@@ -4,7 +4,7 @@
 
 
 # faqextensions
-faqextensions extends the FAQ bundle support in Contao. The extensions allow you to highlight very popular FAQ entries or your personal recommendations in the Contao frontend to make your FAQ section even better. This Contao bundle brings you the following improvements to the FAQ bundle:
+faqextensions extends the FAQ bundle support in Contao. The extension allows you to highlight very popular FAQ entries or your personal recommendations in the Contao frontend to make your FAQ section even better. This Contao bundle brings you the following improvements to the FAQ bundle:
 
 * FAQ list module: Most viewed - lists your FAQs by the most viewed FAQ articles, includes optional pagination
 * FAQ list module: Most recent - lists your FAQs by the most recent added FAQ articles, includes optional pagination
