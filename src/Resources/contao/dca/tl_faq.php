@@ -9,11 +9,11 @@ $GLOBALS['TL_DCA']['tl_faq']['fields']['viewcount'] = array(
 );
 
 $GLOBALS['TL_DCA']['tl_faq']['fields']['helpful'] = array(
-	'sql'                     => "int(10) unsigned NOT NULL default '0'"
+	'sql'                     => "int(10) NOT NULL default '0'"
 );
 
 $GLOBALS['TL_DCA']['tl_faq']['fields']['nothelpful'] = array(
-	'sql'                     => "int(10) unsigned NOT NULL default '0'"
+	'sql'                     => "int(10) NOT NULL default '0'"
 );
 
 $GLOBALS['TL_DCA']['tl_faq']['fields']['noComments']['eval'] = array('tl_class'=>'w50 m12');
