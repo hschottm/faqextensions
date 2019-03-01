@@ -41,7 +41,7 @@
           <?php if ($faq->showhelpful): ?>
             <div class="helpful">
               <div><?php echo sprintf($GLOBALS['TL_LANG']['tl_faq']['nOutofmFoundThisArticleHelpful'], $faq->helpful, $faq->helpful + $faq->nothelpful); ?></div>
-              <div> <?= $GLOBALS['TL_LANG']['tl_faq']['WasThisArticleHelpful'] ?> <a href="{{faq_helpful_url::<?= $faq->alias ?>}}"><?= $GLOBALS['TL_LANG']['MSC']['yes'] ?></a> | <a href="{{faq_nothelpful_url::<?= $faq->alias ?>}}"><?= $GLOBALS['TL_LANG']['MSC']['no'] ?></a></div>
+              <div> <?= $GLOBALS['TL_LANG']['tl_faq']['WasThisArticleHelpful'] ?> <a href="{{faq_helpful_url::<?= $faq->alias ?>}}" rel="nofollow"><?= $GLOBALS['TL_LANG']['MSC']['yes'] ?></a> | <a href="{{faq_nothelpful_url::<?= $faq->alias ?>}}" rel="nofollow"><?= $GLOBALS['TL_LANG']['MSC']['no'] ?></a></div>
             </div>
           <?php endif; ?>
         </section>
