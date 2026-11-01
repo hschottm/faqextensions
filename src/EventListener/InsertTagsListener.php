@@ -33,7 +33,7 @@ class InsertTagsListener
      *
      * @param ContaoFramework $framework
      */
-    public function __construct(ContaoFramework $framework)
+    public function __construct(ContaoFramework $framework, private readonly \Hschottm\FaqExtensionsBundle\Voting\VoterIdentity $identity)
     {
         $this->framework = $framework;
     }
@@ -95,13 +95,14 @@ class InsertTagsListener
     private function generateReplacement(FaqModel $faq, $key, $url)
     {
         $parts = parse_url($url);
-        $query = [];
-        parse_str($parts['query'] ?? '', $query);
-        $query['vote'] = $key === 'faq_helpful_url' ? 1 : -1;
-        $query['tl_faq'] = $faq->alias ?: $faq->id;
-
-        return \Contao\StringUtil::specialcharsUrl(
-            ($parts['path'] ?? '/') . '?' . http_build_query($query)
-        );
+        $return = ($parts['path'] ?? '/').(isset($parts['query']) ? '?'.$parts['query'] : '');
+        $container = \Contao\System::getContainer();
+        return \Contao\StringUtil::specialcharsUrl($container->get('router')->generate('faqextensions_vote', [
+            '_locale' => $container->get('request_stack')->getCurrentRequest()?->getLocale() ?? 'en',
+            'id' => $faq->id,
+            'vote' => $key === 'faq_helpful_url' ? 1 : -1,
+            'return' => $return,
+            'signature' => $this->identity->voteSignature((int) $faq->id, $key === 'faq_helpful_url' ? 1 : -1),
+        ]));
     }
 }

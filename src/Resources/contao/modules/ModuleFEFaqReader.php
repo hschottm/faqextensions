@@ -2,70 +2,28 @@
 
 namespace Hschottm\FaqExtensionsBundle;
 
-class ModuleFEFaqReader extends \Contao\ModuleFaqReader
+use Contao\FaqModel;
+use Contao\Input;
+use Contao\ModuleFaqReader;
+
+class ModuleFEFaqReader extends ModuleFaqReader
 {
-  private function http_strip_query_param($url, $param)
-  {
-    $pieces = parse_url($url);
-    if (empty($pieces['query'])) {
-        return $url;
-    }
-
-    $query = [];
-    parse_str($pieces['query'], $query);
-    if (!isset($query[$param])) {
-        return $url;
-    }
-
-    unset($query[$param]);
-    $pieces['query'] = http_build_query($query);
-    $result = $pieces['path'];
-    if ($pieces['query'])
+    protected function compile()
     {
-      $result .= "?";
-    }
-    $result .= $pieces['query'];
-    return $result;
-  }
-
-	protected function compile()
-	{
-    $objFaq = \Contao\FaqModel::findPublishedByParentAndIdOrAlias(\Contao\Input::get('auto_item'), $this->faq_categories);
-		if (null !== $objFaq)
-		{
-      if ($objFaq->showhelpful && in_array(\Contao\Input::get('vote'), ['1', '-1'], true))
-      {
-        $alias = \Contao\Input::get('tl_faq');
-        if ((string) $alias === (string) ($objFaq->alias ?: $objFaq->id))
-        {
-
-          if (intval(\Contao\Input::get('vote')) == 1)
-          {
-            $objFaq->helpful++;
-          }
-          else if (intval(\Contao\Input::get('vote')) == -1)
-          {
-            $objFaq->nothelpful++;
-          }
-          $requestUri = \Contao\Environment::get('requestUri');
-          $requestUri = $this->http_strip_query_param($requestUri, "vote");
-          $requestUri = $this->http_strip_query_param($requestUri, "tl_faq");
-          $objFaq->save();
-          \Contao\Controller::redirect($requestUri);
+        $faq = FaqModel::findPublishedByParentAndIdOrAlias(Input::get('auto_item'), $this->faq_categories);
+        if ($faq !== null) {
+            ++$faq->viewcount;
+            $faq->save();
         }
-      }
-      $objFaq->viewcount++;
-      $objFaq->save();
-		}
 
-		parent::compile();
+        parent::compile();
 
-    if (null !== $objFaq)
-		{
-      $this->Template->showhelpful = $objFaq->showhelpful;
-      $this->Template->helpful = $objFaq->helpful;
-      $this->Template->nothelpful = $objFaq->nothelpful;
-      $this->Template->alias = $objFaq->alias;
+        if ($faq !== null) {
+            $this->Template->showhelpful = $faq->showhelpful;
+            $this->Template->helpful = $faq->helpful;
+            $this->Template->nothelpful = $faq->nothelpful;
+            $this->Template->alias = $faq->alias;
+            $this->Template->faqId = $faq->id;
+        }
     }
-	}
 }

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="{{ locale }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ 'vote.title'|trans({}, 'faqextensions') }}</title>
+</head>
+<body>
+  <main>
+    <h1>{{ 'vote.title'|trans({}, 'faqextensions') }}</h1>
+    {% if question %}<h2>{{ question }}</h2>{% endif %}
+    <p role="status">{{ ('vote.' ~ status)|trans({}, 'faqextensions') }}</p>
+    {% if status == 'confirm' %}
+      <form method="post">
+        <input type="hidden" name="REQUEST_TOKEN" value="{{ token }}">
+        <p>{{ (vote == 1 ? 'vote.helpful' : 'vote.nothelpful')|trans({}, 'faqextensions') }}</p>
+        <button type="submit">{{ 'vote.submit'|trans({}, 'faqextensions') }}</button>
+      </form>
+      <p>{{ 'vote.cookie'|trans({}, 'faqextensions') }}</p>
+    {% endif %}
+    <p><a href="{{ returnUrl }}">{{ 'vote.back'|trans({}, 'faqextensions') }}</a></p>
+  </main>
+</body>
+</html>

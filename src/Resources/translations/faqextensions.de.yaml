@@ -1,0 +1,12 @@
+vote:
+    title: Antwort bewerten
+    confirm: Bitte bestätige deine Bewertung.
+    helpful: Diese Antwort war hilfreich.
+    nothelpful: Diese Antwort war nicht hilfreich.
+    submit: Bewertung abgeben
+    cookie: Ein Cookie merkt sich diesen Browser für bis zu ein Jahr, um Mehrfachbewertungen zu verhindern. Zum Bewerten müssen Cookies aktiviert sein.
+    accepted: Danke. Deine Bewertung wurde gespeichert.
+    duplicate: Du hast diese Antwort bereits bewertet. Es wurde keine weitere Stimme gezählt.
+    invalid: Deine Bewertung konnte nicht gespeichert werden. Bitte öffne den Bewertungslink erneut und erlaube Cookies.
+    unavailable: Diese Antwort kann nicht mehr bewertet werden.
+    back: Zurück zu den FAQ

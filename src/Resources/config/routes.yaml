@@ -1,0 +1,11 @@
+faqextensions_vote:
+    path: /_faqextensions/{_locale}/vote/{id}/{vote}
+    controller: Hschottm\FaqExtensionsBundle\Controller\VoteController
+    methods: [GET, POST]
+    defaults:
+        _scope: frontend
+        _token_check: true
+    requirements:
+        _locale: '[a-z]{2}(?:[_-][A-Za-z]{2})?'
+        id: '[1-9][0-9]*'
+        vote: '1|-1'
