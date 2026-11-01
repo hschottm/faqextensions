@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 final class CompatibilityTest extends TestCase
 {
-    public function testAllModulesLoadWithContao53(): void
+    public function testAllModulesLoadWithContao57(): void
     {
         foreach (['List', 'TopList', 'RecentList', 'HelpfulList', 'RecommendedList', 'Reader', 'Page'] as $name) {
             self::assertTrue(class_exists('Hschottm\\FaqExtensionsBundle\\ModuleFEFaq'.$name));

@@ -21,16 +21,17 @@ FAQ lists. Visitors can rate answers, and editors can highlight recommendations.
 
 ## Languages
 
-Complete translations cover all 16 languages shipped with Contao 5.3 Core:
+Complete translations cover all 14 languages shipped with Contao 5.7 Core:
 Czech (`cs`), German (`de`), English (`en`), Spanish (`es`), Persian (`fa`),
 French (`fr`), Italian (`it`), Japanese (`ja`), Dutch (`nl`), Polish (`pl`),
-Russian (`ru`), Slovak (`sk`), Slovenian (`sl`), Serbian (`sr`, Cyrillic),
-Swedish (`sv`) and Turkish (`tr`). Latvian (`lv`) and Portuguese (`pt`), which
-are also shipped with Contao's FAQ bundle, are included as well.
+Russian (`ru`), Slovenian (`sl`), Swedish (`sv`) and Turkish (`tr`).
+All official FAQ bundle languages are covered as well. Latvian (`lv`),
+Portuguese (`pt`), Slovak (`sk`) and Serbian (`sr`, Cyrillic) remain available,
+bringing the extension's total to 18 languages.
 
 The scope follows the language directories of the official
-[Contao 5.3 Core](https://github.com/contao/contao/tree/5.3/core-bundle/contao/languages)
-and [FAQ bundle](https://github.com/contao/contao/tree/5.3/faq-bundle/contao/languages).
+[Contao 5.7 Core](https://github.com/contao/contao/tree/5.7/core-bundle/contao/languages)
+and [FAQ bundle](https://github.com/contao/contao/tree/5.7/faq-bundle/contao/languages).
 Contao's frontend allows additional languages; those do not all have official
 Core translations.
 
@@ -43,8 +44,8 @@ links use the language of the page they appear on.
 
 ## Requirements
 
-* Contao 5.3 or newer within Contao 5 (`^5.3`)
-* PHP 8.1 or newer
+* Contao 5.7 or newer within Contao 5 (`^5.7`)
+* PHP 8.3 or newer
 * Contao FAQ bundle
 
 The Contao comments bundle is optional.
@@ -55,12 +56,12 @@ Install `hschottm/faqextensions` through the Contao Manager or Composer, then ru
 the database migrations:
 
 ```sh
-composer require hschottm/faqextensions
+composer require hschottm/faqextensions:^5.1
 php vendor/bin/contao-console contao:migrate
 ```
 
-Until a compatible version is tagged, select `dev-master` explicitly when
-installing this development version.
+Version 5.1 supports Contao 5.7. For Contao 5.3, use version `~5.0.0`
+from the `contao53` branch.
 
 ## Usage
 
@@ -114,9 +115,8 @@ The four lists extend `faqextensions_list.html.twig`; the reader and FAQ page
 share `faqextensions_answer.html.twig` and `faqextensions_vote.html.twig`.
 The module template base names remain unchanged.
 
-Under Contao 5.3, the templates use Contao's interoperability layer for the core
-module wrappers, images and comment form. No PHP templates are shipped by this
-extension.
+The templates reuse Contao's core module wrappers, images and comment form.
+No PHP templates are shipped by this extension.
 
 Custom voting links can use `{{faq_helpful_url::ID_OR_ALIAS}}` and
 `{{faq_nothelpful_url::ID_OR_ALIAS}}` on a page containing the corresponding FAQ
@@ -129,6 +129,12 @@ The existing `tl_faq` fields `viewcount`, `recommended`, `helpful`, `nothelpful`
 and `showhelpful` retain their names and stored values.
 
 ## Release history
+
+### 5.1.0 — Contao 5.7 support
+
+* Require Contao 5.7 and PHP 8.3 or newer.
+* Retain Twig templates, translations and protected FAQ voting.
+* Verified with Contao 5.7.15: 15 automated tests and 357 integration assertions.
 
 ### Translations
 
@@ -185,7 +191,7 @@ pagination counts, duplicate voting, rollback on errors and concurrent requests.
 The voting tests require PDO SQLite; the concurrency test additionally needs `pcntl`.
 Translation tests verify catalogue completeness, UTF-8 strings and numeric placeholders.
 
-Run the rendering integration tests with an installed Contao 5.3 application
+Run the rendering integration tests with an installed Contao 5.7 application
 (including the FAQ and comments bundles) and the PHP SQLite extension:
 
 ```sh

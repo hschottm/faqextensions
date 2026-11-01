@@ -1,10 +1,10 @@
 <?php
 
-// Run against an installed Contao 5.3 application without changing its files or database:
+// Run against an installed Contao 5.7 application without changing its files or database:
 // CONTAO_APP=/path/to/contao php tests/integration/render.php
 $application = getenv('CONTAO_APP');
 if (!$application || !is_file($application.'/vendor/autoload.php')) {
-    throw new RuntimeException('Set CONTAO_APP to an installed Contao 5.3 application.');
+    throw new RuntimeException('Set CONTAO_APP to an installed Contao 5.7 application.');
 }
 $loader = require $application.'/vendor/autoload.php';
 $extension = dirname(__DIR__, 2);
@@ -35,6 +35,12 @@ $kernel = new FaqRenderingKernel('prod', false);
 try {
     $kernel->boot();
     $container = $kernel->getContainer();
+    // Initialize Contao's CSRF storage as a normal console command would.
+    $command = new Symfony\Component\Console\Command\Command('faqextensions:render-test');
+    $command->setApplication(new Symfony\Component\Console\Application());
+    $container->get('event_dispatcher')->dispatch(new Symfony\Component\Console\Event\ConsoleCommandEvent(
+        $command, new Symfony\Component\Console\Input\ArrayInput([]), new Symfony\Component\Console\Output\BufferedOutput(),
+    ), Symfony\Component\Console\ConsoleEvents::COMMAND);
     $container->get('contao.framework')->initialize();
     $twig = $container->get('twig');
     $request = Symfony\Component\HttpFoundation\Request::create('https://example.org/faq?keep=1');
