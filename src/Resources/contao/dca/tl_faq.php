@@ -9,10 +9,14 @@ $GLOBALS['TL_DCA']['tl_faq']['fields']['viewcount'] = array(
 );
 
 $GLOBALS['TL_DCA']['tl_faq']['fields']['helpful'] = array(
+	'default'                 => 0,
+	'eval'                    => array('doNotCopy' => true),
 	'sql'                     => "int(10) NOT NULL default '0'"
 );
 
 $GLOBALS['TL_DCA']['tl_faq']['fields']['nothelpful'] = array(
+	'default'                 => 0,
+	'eval'                    => array('doNotCopy' => true),
 	'sql'                     => "int(10) NOT NULL default '0'"
 );
 

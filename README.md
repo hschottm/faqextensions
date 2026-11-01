@@ -77,6 +77,10 @@ and `showhelpful` retain their names and stored values.
 
 ## Release history
 
+### FAQ duplication
+
+* Reset helpful and unhelpful vote counters to zero when duplicating an FAQ.
+
 ### Twig templates
 
 * Replaced all six bundled PHP templates with Twig templates.
