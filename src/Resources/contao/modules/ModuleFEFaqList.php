@@ -28,10 +28,9 @@ class ModuleFEFaqList extends \Contao\ModuleFaqList
 		while ($objFaq->next())
 		{
 			$arrTemp = $objFaq->row();
-			$arrTemp['title'] = specialchars($objFaq->question, true);
-			$arrTemp['href'] = $this->generateFaqLink($objFaq);
+			$arrTemp['title'] = \Contao\StringUtil::specialchars($objFaq->question, true);
+			$arrTemp['href'] = $this->generateFaqLink($objFaq->current());
 
-			$objPid = $objFaq->getRelated('pid');
 
 			array_push($arrFaq, $arrTemp);
 		}

@@ -16,7 +16,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['faq_sortorder'] = array
 	'sql'                     => "varchar(20) NOT NULL default 'sort_alpha_asc'"
 );
 
-class tl_module_faq_extensions extends Backend
+class tl_module_faq_extensions extends \Contao\Backend
 {
 
 	public function getSortValues()

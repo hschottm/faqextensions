@@ -12,20 +12,23 @@ class FEFaqModel extends \Contao\FaqModel
 	 *
 	 * @return integer The number of news items
 	 */
-	public static function countPublishedByPids($arrPids, array $arrOptions=array())
+	public static function countPublishedByPids($arrPids, array $arrOptions=array(), $recommendedOnly=false)
 	{
-		if (empty($arrPids) || !\is_array($arrPids))
-		{
-			return 0;
-		}
+        if (empty($arrPids) || !\is_array($arrPids)) {
+            return 0;
+        }
 
-		$t = static::$strTable;
+        $t = static::$strTable;
 		$arrColumns = array("$t.pid IN(" . implode(',', array_map('\intval', $arrPids)) . ")");
 
     if (!static::isPreviewMode($arrOptions))
 		{
 			$arrColumns[] = "$t.published='1'";
 		}
+
+		if ($recommendedOnly) {
+            $arrColumns[] = "$t.recommended=1";
+        }
 
 		return static::countBy($arrColumns, null, $arrOptions);
 	}
@@ -40,12 +43,16 @@ class FEFaqModel extends \Contao\FaqModel
 	 * @return \Model\Collection|\FaqModel|null A collection of models or null if there are no FAQs
 	 */
 
-	public static function findPublishedByViewCountAndPids($arrPids, $intLimit=0, $intOffset=0)
+	public static function findPublishedByViewCountAndPids($arrPids, $intLimit=0, $intOffset=0, array $arrOptions=array())
 	{
-		$t = static::$strTable;
+		if (empty($arrPids) || !\is_array($arrPids)) {
+            return null;
+        }
+
+        $t = static::$strTable;
 		$arrColumns = array("$t.pid IN(" . implode(',', array_map('\intval', $arrPids)) . ")");
 
-		if (!BE_USER_LOGGED_IN)
+		if (!static::isPreviewMode($arrOptions))
 		{
 			$arrColumns[] = "$t.published='1'";
 		}
@@ -71,10 +78,17 @@ class FEFaqModel extends \Contao\FaqModel
 
 	public static function findPublishedByRecommendationAndPids($arrPids, $intLimit=0, $intOffset=0, array $arrOptions=array())
 	{
-    $t = static::$strTable;
+    if (empty($arrPids) || !\is_array($arrPids)) {
+            return null;
+        }
+
+        $t = static::$strTable;
 		$arrColumns = array("$t.pid IN(" . implode(',', array_map('\intval', $arrPids)) . ")");
 
-		if (!BE_USER_LOGGED_IN)
+		$arrColumns[] = "$t.recommended=1";
+        $arrOptions['order'] = $arrOptions['order'] ?? 'sort_alpha_asc';
+
+		if (!static::isPreviewMode($arrOptions))
 		{
 			$arrColumns[] = "$t.published='1'";
 		}
@@ -116,12 +130,16 @@ class FEFaqModel extends \Contao\FaqModel
 	 * @return \Model\Collection|\FaqModel|null A collection of models or null if there are no FAQs
 	 */
 
-	public static function findPublishedByHelpfulAndPids($arrPids, $intLimit=0, $intOffset=0)
+	public static function findPublishedByHelpfulAndPids($arrPids, $intLimit=0, $intOffset=0, array $arrOptions=array())
 	{
-    $t = static::$strTable;
+    if (empty($arrPids) || !\is_array($arrPids)) {
+            return null;
+        }
+
+        $t = static::$strTable;
 		$arrColumns = array("$t.pid IN(" . implode(',', array_map('\intval', $arrPids)) . ")");
 
-		if (!BE_USER_LOGGED_IN)
+		if (!static::isPreviewMode($arrOptions))
 		{
 			$arrColumns[] = "$t.published='1'";
 		}
@@ -143,12 +161,16 @@ class FEFaqModel extends \Contao\FaqModel
 	 * @return \Model\Collection|\FaqModel|null A collection of models or null if there are no FAQs
 	 */
 
-	public static function findPublishedByDateAndPids($arrPids, $intLimit=0, $intOffset=0)
+	public static function findPublishedByDateAndPids($arrPids, $intLimit=0, $intOffset=0, array $arrOptions=array())
 	{
-    $t = static::$strTable;
+    if (empty($arrPids) || !\is_array($arrPids)) {
+            return null;
+        }
+
+        $t = static::$strTable;
 		$arrColumns = array("$t.pid IN(" . implode(',', array_map('\intval', $arrPids)) . ")");
 
-		if (!BE_USER_LOGGED_IN)
+		if (!static::isPreviewMode($arrOptions))
 		{
 			$arrColumns[] = "$t.published='1'";
 		}

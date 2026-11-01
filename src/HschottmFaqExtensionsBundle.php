@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class HschottmFaqExtensionsBundle extends Bundle
 {
-    public function getContainerExtension()
+    public function getContainerExtension(): ?\Symfony\Component\DependencyInjection\Extension\ExtensionInterface
     {
         return new FaqExtensionsExtension();
     }

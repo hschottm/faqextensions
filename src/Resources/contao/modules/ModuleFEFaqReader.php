@@ -7,7 +7,7 @@ class ModuleFEFaqReader extends \Contao\ModuleFaqReader
   private function http_strip_query_param($url, $param)
   {
     $pieces = parse_url($url);
-    if (!$pieces['query']) {
+    if (empty($pieces['query'])) {
         return $url;
     }
 
@@ -30,35 +30,35 @@ class ModuleFEFaqReader extends \Contao\ModuleFaqReader
 
 	protected function compile()
 	{
-    $objFaq = \Contao\FaqModel::findPublishedByParentAndIdOrAlias(\Input::get('items'), $this->faq_categories);
+    $objFaq = \Contao\FaqModel::findPublishedByParentAndIdOrAlias(\Contao\Input::get('auto_item'), $this->faq_categories);
 		if (null !== $objFaq)
 		{
-      if (\Input::get('vote'))
+      if ($objFaq->showhelpful && in_array(\Contao\Input::get('vote'), ['1', '-1'], true))
       {
-        $alias = \Input::get('tl_faq');
-        if (strcmp($alias, $objFaq->alias) == 0)
+        $alias = \Contao\Input::get('tl_faq');
+        if ((string) $alias === (string) ($objFaq->alias ?: $objFaq->id))
         {
-          $votecalled = true;
-          if (intval(\Input::get('vote')) == 1)
+
+          if (intval(\Contao\Input::get('vote')) == 1)
           {
             $objFaq->helpful++;
           }
-          else if (intval(\Input::get('vote')) == -1)
+          else if (intval(\Contao\Input::get('vote')) == -1)
           {
             $objFaq->nothelpful++;
           }
-          $requestUri = \Environment::get('requestUri');
+          $requestUri = \Contao\Environment::get('requestUri');
           $requestUri = $this->http_strip_query_param($requestUri, "vote");
           $requestUri = $this->http_strip_query_param($requestUri, "tl_faq");
           $objFaq->save();
-          \Controller::redirect($requestUri);
+          \Contao\Controller::redirect($requestUri);
         }
       }
       $objFaq->viewcount++;
       $objFaq->save();
 		}
 
-		\Contao\ModuleFaqReader::compile();
+		parent::compile();
 
     if (null !== $objFaq)
 		{

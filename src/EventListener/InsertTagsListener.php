@@ -10,13 +10,13 @@
 
 namespace Hschottm\FaqExtensionsBundle\EventListener;
 
-use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\FaqModel;
 
 class InsertTagsListener
 {
     /**
-     * @var ContaoFrameworkInterface
+     * @var ContaoFramework
      */
     private $framework;
 
@@ -31,9 +31,9 @@ class InsertTagsListener
     /**
      * Constructor.
      *
-     * @param ContaoFrameworkInterface $framework
+     * @param ContaoFramework $framework
      */
-    public function __construct(ContaoFrameworkInterface $framework)
+    public function __construct(ContaoFramework $framework)
     {
         $this->framework = $framework;
     }
@@ -51,6 +51,10 @@ class InsertTagsListener
         $key = strtolower($elements[0]);
         if (!\in_array($key, $this->supportedTags, true)) {
             return false;
+        }
+
+        if (empty($elements[1])) {
+            return '';
         }
 
         $this->framework->initialize();
@@ -76,7 +80,7 @@ class InsertTagsListener
      */
     private function generateUrl(FaqModel $faq)
     {
-        return \Environment::get('uri');
+        return \Contao\Environment::get('uri');
     }
 
     /**
@@ -90,22 +94,14 @@ class InsertTagsListener
      */
     private function generateReplacement(FaqModel $faq, $key, $url)
     {
-        switch ($key) {
-          case 'faq_helpful_url':
-            if (\Environment::get('queryString')) {
-                return $url.'&amp;vote=1&amp;tl_faq='.$faq->alias;
-            }
+        $parts = parse_url($url);
+        $query = [];
+        parse_str($parts['query'] ?? '', $query);
+        $query['vote'] = $key === 'faq_helpful_url' ? 1 : -1;
+        $query['tl_faq'] = $faq->alias ?: $faq->id;
 
-              return $url.'?vote=1&amp;tl_faq='.$faq->alias;
-
-          case 'faq_nothelpful_url':
-          if (\Environment::get('queryString')) {
-              return $url.'&amp;vote=-1&amp;tl_faq='.$faq->alias;
-          }
-
-            return $url.'?vote=-1&amp;tl_faq='.$faq->alias;
-        }
-
-        return false;
+        return \Contao\StringUtil::specialcharsUrl(
+            ($parts['path'] ?? '/') . '?' . http_build_query($query)
+        );
     }
 }
