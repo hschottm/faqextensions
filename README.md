@@ -199,3 +199,8 @@ custom overrides, escaping, translations, real voting insert tags, images,
 downloads, comments, structured data and the full HTTP confirmation/POST flow.
 All 18 languages, regional fallbacks and Persian text direction are checked with
 the real Contao translation loader and HTTP routes.
+
+## License
+
+This extension is licensed under the GNU Lesser General Public License, version 3
+or (at your option) any later version (`LGPL-3.0-or-later`). See [LICENSE](LICENSE).
