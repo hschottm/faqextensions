@@ -1,0 +1,17 @@
+{% extends '@Contao/block_unsearchable.html.twig' %}
+
+{% block content %}
+  {% for category in faq %}
+    <article>
+      <h2>{{ category.headline }}</h2>
+      {% for item in category.items %}
+        <section>
+          <h3 id="{{ item.alias }}">{{ item.question }}</h3>
+          {% include '@Contao/faqextensions_answer.html.twig' with item only %}
+        </section>
+      {% endfor %}
+      <p class="toplink"><a href="{{ request }}#top">{{ topLink }}</a></p>
+    </article>
+  {% endfor %}
+  {% do add_schema_org(getSchemaOrgData.invoke()) %}
+{% endblock %}

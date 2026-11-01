@@ -1,0 +1,18 @@
+<div class="ce_text content-text block">
+  {% if not addBefore %}{{ answer|default('')|csp_inline_styles|raw }}{% endif %}
+  {% if addImage %}{% include '@Contao/image.html.twig' %}{% endif %}
+  {% if addBefore %}{{ answer|default('')|csp_inline_styles|raw }}{% endif %}
+</div>
+
+{% if enclosure %}
+  <ul class="enclosure">
+    {% for file in enclosure %}
+      <li class="download-element ext-{{ file.extension }}">
+        <a href="{{ file.href }}" title="{{ file.title }}">{{ file.link }} <span class="size">({{ file.filesize }})</span></a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+<p class="info">{{ info }}</p>
+{% include '@Contao/faqextensions_vote.html.twig' %}

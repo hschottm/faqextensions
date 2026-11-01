@@ -66,5 +66,13 @@ class ModuleFEFaqPage extends \Contao\ModuleFaqPage
 		}
 
 		parent::compile();
+
+        // Expose each legacy stdClass item as a Twig include context.
+        $categories = $this->Template->faq ?? [];
+        foreach ($categories as &$category) {
+            $category['items'] = array_map(static fn ($item) => (array) $item, $category['items']);
+        }
+        unset($category);
+        $this->Template->faq = $categories;
 	}
 }

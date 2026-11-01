@@ -1,0 +1,27 @@
+{% extends '@Contao/block_searchable.html.twig' %}
+
+{% block content %}
+  {% if error %}
+    {{ error|raw }}
+  {% else %}
+    <h1>{{ question }}</h1>
+    {% include '@Contao/faqextensions_answer.html.twig' %}
+
+    {% if referer %}
+      <!-- indexer::stop -->
+      <p class="back"><a href="{{ referer }}" title="{{ back }}">{{ back }}</a></p>
+      <!-- indexer::continue -->
+    {% endif %}
+    {% do add_schema_org(getSchemaOrgData.invoke()) %}
+  {% endif %}
+
+  {% if allowComments %}
+    <div class="ce_comments block">
+      <{{ hlc }}>{{ hlcText }}</{{ hlc }}>
+      {{ comments|join('')|raw }}
+      {{ pagination|raw }}
+      <{{ hlc }}>{{ addComment }}</{{ hlc }}>
+      {% include '@Contao/mod_comment_form.html.twig' %}
+    </div>
+  {% endif %}
+{% endblock %}
