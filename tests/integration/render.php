@@ -129,15 +129,15 @@ try {
     $container->get('translator')->setLocale('de');
     $html = $render('mod_faqreader', $data);
     $check(str_contains($html, 'War dieser Artikel hilfreich?'), 'German voting question');
-    $check(str_contains($html, '>ja</a>') && str_contains($html, '>nein</a>'), 'German voting labels');
+    $check(str_contains($html, '>Ja</a>') && str_contains($html, '>Nein</a>'), 'German voting labels');
     $data['alias'] = '';
     $html = $render('mod_faqreader', $data);
     $check(str_contains($html, '/_faqextensions/en/vote/1/1'), 'Voting supports ID when alias is empty');
     $container->get('translator')->setLocale('en');
     $container->get('request_stack')->pop();
-    $call = static function (string $method, array $cookies = [], array $body = [], string $return = '/faq', int $vote = 1) use ($kernel): Symfony\Component\HttpFoundation\Response {
+    $call = static function (string $method, array $cookies = [], array $body = [], string $return = '/faq', int $vote = 1, string $locale = 'en') use ($kernel): Symfony\Component\HttpFoundation\Response {
         $signature = (new Hschottm\FaqExtensionsBundle\Voting\VoterIdentity('faqextensions-render-test'))->voteSignature(1, $vote);
-        $request = Symfony\Component\HttpFoundation\Request::create('https://example.org/_faqextensions/en/vote/1/'.$vote.'?signature='.$signature.'&return='.rawurlencode($return), $method, $body, $cookies);
+        $request = Symfony\Component\HttpFoundation\Request::create('https://example.org/_faqextensions/'.$locale.'/vote/1/'.$vote.'?signature='.$signature.'&return='.rawurlencode($return), $method, $body, $cookies);
         return $kernel->handle($request);
     };
     $unsigned = $kernel->handle(Symfony\Component\HttpFoundation\Request::create('https://example.org/_faqextensions/en/vote/1/1'));
@@ -176,6 +176,67 @@ try {
     $schema = Contao\DcaExtractor::getInstance('tl_faq_vote')->getDbInstallerArray();
     $check(isset($schema['TABLE_FIELDS']['voter']), 'Migration: voter field discovered from bundle DCA');
     $check(str_contains(implode(' ', $schema['TABLE_CREATE_DEFINITIONS']), 'UNIQUE'), 'Migration: unique voter claim index');
+    $db->executeStatement('UPDATE tl_faq SET showhelpful=1 WHERE id=1');
+    $locales = ['cs', 'de', 'en', 'es', 'fa', 'fr', 'it', 'ja', 'lv', 'nl', 'pl', 'pt', 'ru', 'sk', 'sl', 'sr', 'sv', 'tr'];
+    $text = static function (string $html): string {
+        return html_entity_decode(strip_tags($html), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    };
+    foreach ($locales as $locale) {
+        $messages = Symfony\Component\Yaml\Yaml::parseFile($extension.'/src/Resources/translations/faqextensions.'.$locale.'.yaml')['vote'];
+        $response = $call('GET', [], [], '/faq', 1, $locale);
+        $check($response->getStatusCode() === 200, $locale.': HTTP voting route');
+        $check(str_contains($text($response->getContent()), $messages['confirm']), $locale.': localized confirmation');
+        $check(str_contains($text($response->getContent()), $messages['cookie']), $locale.': localized cookie explanation');
+        $direction = $locale === 'fa' ? 'rtl' : 'ltr';
+        $check(str_contains($response->getContent(), 'lang="'.$locale.'" dir="'.$direction.'"'), $locale.': document language and direction');
+        foreach (['accepted', 'duplicate', 'invalid', 'unavailable', 'invalid_link'] as $status) {
+            $html = $twig->render('@HschottmFaqExtensions/vote.html.twig', [
+                'locale' => $locale, 'translationLocale' => $locale, 'direction' => $direction,
+                'status' => $status, 'question' => '', 'returnUrl' => '/faq',
+            ]);
+            $check(str_contains($text($html), $messages[$status]), $locale.': '.$status.' message');
+        }
+        $oldLanguage = $GLOBALS['TL_LANG'];
+        $GLOBALS['TL_LANG'] = [];
+        foreach (['modules', 'tl_faq', 'tl_module'] as $domain) {
+            require $extension.'/src/Resources/contao/languages/'.$locale.'/'.$domain.'.php';
+        }
+        $expected = $GLOBALS['TL_LANG'];
+        $GLOBALS['TL_LANG'] = $oldLanguage;
+        $translator = $container->get('translator');
+        $check($translator->trans('FMD.faqtoplist.0', [], 'contao_modules', $locale) === $expected['FMD']['faqtoplist'][0], $locale.': module catalogue loaded');
+        $check($translator->trans('tl_module.faq_sortorder.1', [], 'contao_tl_module', $locale) === $expected['tl_module']['faq_sortorder'][1], $locale.': backend field help loaded');
+        $check($translator->trans('tl_faq.showhelpful.0', [], 'contao_tl_faq', $locale) === $expected['tl_faq']['showhelpful'][0], $locale.': FAQ label loaded');
+        $translator->setLocale($locale);
+        $localeRequest = Symfony\Component\HttpFoundation\Request::create('https://example.org/faq');
+        $localeRequest->setLocale($locale);
+        $container->get('request_stack')->push($localeRequest);
+        try {
+            $html = $twig->render('@Contao/faqextensions_vote.html.twig', ['showhelpful' => true, 'helpful' => 17, 'nothelpful' => 12, 'alias' => '1', 'id' => 1]);
+        } finally {
+            $container->get('request_stack')->pop();
+        }
+        $check(str_contains($text($html), sprintf($expected['tl_faq']['nOutofmFoundThisArticleHelpful'], 17, 29)), $locale.': vote count and placeholder order');
+        $check(str_contains($html, '>'.$messages['yes'].'</a>') && str_contains($html, '>'.$messages['no'].'</a>'), $locale.': localized yes/no labels');
+        $check(str_contains($html, '/_faqextensions/'.$locale.'/vote/1/1'), $locale.': link retains frontend language');
+    }
+    foreach (['de-CH' => 'de', 'fr_CA' => 'fr', 'pt-BR' => 'pt', 'sr_Cyrl_RS' => 'sr', 'fa-IR' => 'fa', 'fil' => 'en', 'zz' => 'en'] as $locale => $fallback) {
+        $messages = Symfony\Component\Yaml\Yaml::parseFile($extension.'/src/Resources/translations/faqextensions.'.$fallback.'.yaml')['vote'];
+        $response = $call('GET', [], [], '/faq', 1, $locale);
+        $check($response->getStatusCode() === 200, $locale.': regional route');
+        $check(str_contains($text($response->getContent()), $messages['confirm']), $locale.': base language or English fallback');
+        $direction = $fallback === 'fa' ? 'rtl' : 'ltr';
+        $check(str_contains($response->getContent(), 'dir="'.$direction.'"'), $locale.': direction follows language');
+        $localeRequest = Symfony\Component\HttpFoundation\Request::create('https://example.org/faq');
+        $localeRequest->setLocale($locale);
+        $container->get('request_stack')->push($localeRequest);
+        try {
+            $link = $container->get('contao_faqextensions.listener.insert_tags')->onReplaceInsertTags('faq_helpful_url::1');
+        } finally {
+            $container->get('request_stack')->pop();
+        }
+        $check(str_contains($link, '/_faqextensions/'.Contao\CoreBundle\Util\LocaleUtil::canonicalize($locale).'/vote/1/1'), $locale.': generated links normalize locale codes');
+    }
     echo "OK ($checks integration assertions, Contao ".Composer\InstalledVersions::getPrettyVersion('contao/core-bundle').")\n";
 } finally {
     $kernel->shutdown();

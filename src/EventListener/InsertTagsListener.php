@@ -98,7 +98,7 @@ class InsertTagsListener
         $return = ($parts['path'] ?? '/').(isset($parts['query']) ? '?'.$parts['query'] : '');
         $container = \Contao\System::getContainer();
         return \Contao\StringUtil::specialcharsUrl($container->get('router')->generate('faqextensions_vote', [
-            '_locale' => $container->get('request_stack')->getCurrentRequest()?->getLocale() ?? 'en',
+            '_locale' => \Contao\CoreBundle\Util\LocaleUtil::canonicalize($container->get('request_stack')->getCurrentRequest()?->getLocale() ?? 'en'),
             'id' => $faq->id,
             'vote' => $key === 'faq_helpful_url' ? 1 : -1,
             'return' => $return,

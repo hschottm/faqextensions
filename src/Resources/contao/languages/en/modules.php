@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['TL_LANG']['FMD']['faqtoplist'] = array('Most frequently viewed FAQ list', 'Adds a list of the most frequently viewed frequently asked questions to the page');
-$GLOBALS['TL_LANG']['FMD']['faqrecommendedlist'] = array('Recommended FAQ list', 'Adds a list of the recommended frequently asked questions to the page');
-$GLOBALS['TL_LANG']['FMD']['faqhelpfullist'] = array('Helpful FAQ list', 'Adds a list of the most helpful questions to the page. The sort order is defined by the number of helpful votes.');
-$GLOBALS['TL_LANG']['FMD']['faqrecentlist'] = array('Recent FAQ list', 'Adds a list of the most recent questions to the page. The sort order is defined by the date of creation.');
+$GLOBALS['TL_LANG']['FMD']['faqtoplist'] = ['Most viewed FAQ list', 'Adds a list of the most viewed FAQ entries to the page.'];
+$GLOBALS['TL_LANG']['FMD']['faqrecommendedlist'] = ['Recommended FAQ list', 'Adds a list of recommended FAQ entries to the page.'];
+$GLOBALS['TL_LANG']['FMD']['faqhelpfullist'] = ['Most helpful FAQ list', 'Lists FAQ entries by helpful votes minus unhelpful votes.'];
+$GLOBALS['TL_LANG']['FMD']['faqrecentlist'] = ['Recently updated FAQ list', 'Lists FAQ entries by their last modification date, newest first.'];

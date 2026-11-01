@@ -1,24 +1,24 @@
 <!doctype html>
-<html lang="{{ locale }}">
+<html lang="{{ locale }}" dir="{{ direction }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ 'vote.title'|trans({}, 'faqextensions') }}</title>
+  <title>{{ 'vote.title'|trans({}, 'faqextensions', translationLocale) }}</title>
 </head>
 <body>
   <main>
-    <h1>{{ 'vote.title'|trans({}, 'faqextensions') }}</h1>
+    <h1>{{ 'vote.title'|trans({}, 'faqextensions', translationLocale) }}</h1>
     {% if question %}<h2>{{ question }}</h2>{% endif %}
-    <p role="status">{{ ('vote.' ~ status)|trans({}, 'faqextensions') }}</p>
+    <p role="status">{{ ('vote.' ~ status)|trans({}, 'faqextensions', translationLocale) }}</p>
     {% if status == 'confirm' %}
       <form method="post">
         <input type="hidden" name="REQUEST_TOKEN" value="{{ token }}">
-        <p>{{ (vote == 1 ? 'vote.helpful' : 'vote.nothelpful')|trans({}, 'faqextensions') }}</p>
-        <button type="submit">{{ 'vote.submit'|trans({}, 'faqextensions') }}</button>
+        <p>{{ (vote == 1 ? 'vote.helpful' : 'vote.nothelpful')|trans({}, 'faqextensions', translationLocale) }}</p>
+        <button type="submit">{{ 'vote.submit'|trans({}, 'faqextensions', translationLocale) }}</button>
       </form>
-      <p>{{ 'vote.cookie'|trans({}, 'faqextensions') }}</p>
+      <p>{{ 'vote.cookie'|trans({}, 'faqextensions', translationLocale) }}</p>
     {% endif %}
-    <p><a href="{{ returnUrl }}">{{ 'vote.back'|trans({}, 'faqextensions') }}</a></p>
+    <p><a href="{{ returnUrl }}">{{ 'vote.back'|trans({}, 'faqextensions', translationLocale) }}</a></p>
   </main>
 </body>
 </html>
