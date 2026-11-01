@@ -6,6 +6,6 @@ faqextensions_vote:
         _scope: frontend
         _token_check: true
     requirements:
-        _locale: '[a-z]{2}(?:[_-][A-Za-z]{2})?'
+        _locale: '[a-z]{2,3}(?:[_-][A-Za-z0-9]{2,8})*'
         id: '[1-9][0-9]*'
         vote: '1|-1'

@@ -17,7 +17,29 @@ FAQ lists. Visitors can rate answers, and editors can highlight recommendations.
 * All four lists support category selection, an item limit, pagination and an
   optional FAQ reader module.
 * The standard FAQ reader and FAQ page display voting links when enabled.
-* German and English backend labels and voting messages are included.
+* Backend labels, help texts and voting messages are available in 18 languages.
+
+## Languages
+
+Complete translations cover all 16 languages shipped with Contao 5.3 Core:
+Czech (`cs`), German (`de`), English (`en`), Spanish (`es`), Persian (`fa`),
+French (`fr`), Italian (`it`), Japanese (`ja`), Dutch (`nl`), Polish (`pl`),
+Russian (`ru`), Slovak (`sk`), Slovenian (`sl`), Serbian (`sr`, Cyrillic),
+Swedish (`sv`) and Turkish (`tr`). Latvian (`lv`) and Portuguese (`pt`), which
+are also shipped with Contao's FAQ bundle, are included as well.
+
+The scope follows the language directories of the official
+[Contao 5.3 Core](https://github.com/contao/contao/tree/5.3/core-bundle/contao/languages)
+and [FAQ bundle](https://github.com/contao/contao/tree/5.3/faq-bundle/contao/languages).
+Contao's frontend allows additional languages; those do not all have official
+Core translations.
+
+Regional locale variants such as `de-CH`, `fr-CA` and `pt-BR` use the base-language
+catalogue through Symfony's locale fallback. Serbian uses the supplied Cyrillic
+translation; script variants are not transliterated. Persian voting pages use
+right-to-left text direction. English remains the fallback for unsupported
+languages. The backend language follows the user's Contao preference; voting
+links use the language of the page they appear on.
 
 ## Requirements
 
@@ -108,6 +130,13 @@ and `showhelpful` retain their names and stored values.
 
 ## Release history
 
+### Translations
+
+* Added complete catalogues for all 18 languages shipped with Contao 5.3 Core
+  and the FAQ bundle, including the voting confirmation and error messages.
+* Added locale normalization, regional fallback and Persian right-to-left output.
+* Corrected the list descriptions and sort labels to refer to the last modification.
+
 ### Protection against repeated ratings
 
 * Added browser and member recognition with transactional vote recording.
@@ -154,6 +183,7 @@ Install the Composer development dependencies and run `vendor/bin/phpunit`.
 The tests cover service registration, list filtering, preview visibility and
 pagination counts, duplicate voting, rollback on errors and concurrent requests.
 The voting tests require PDO SQLite; the concurrency test additionally needs `pcntl`.
+Translation tests verify catalogue completeness, UTF-8 strings and numeric placeholders.
 
 Run the rendering integration tests with an installed Contao 5.3 application
 (including the FAQ and comments bundles) and the PHP SQLite extension:
@@ -167,3 +197,5 @@ and removes it afterwards. It uses the application's installed dependencies but
 does not change that application's files or database. It checks all six templates,
 custom overrides, escaping, translations, real voting insert tags, images,
 downloads, comments, structured data and the full HTTP confirmation/POST flow.
+All 18 languages, regional fallbacks and Persian text direction are checked with
+the real Contao translation loader and HTTP routes.
