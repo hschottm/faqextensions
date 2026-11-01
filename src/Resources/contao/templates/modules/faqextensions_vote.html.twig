@@ -1,0 +1,10 @@
+{% if showhelpful %}
+  <div class="helpful">
+    <div>{{ 'tl_faq.nOutofmFoundThisArticleHelpful'|trans({}, 'contao_tl_faq')|format(helpful, helpful + nothelpful) }}</div>
+    <div>
+      {{ 'tl_faq.WasThisArticleHelpful'|trans({}, 'contao_tl_faq') }}
+      <a href="{{ insert_tag('faq_helpful_url::' ~ (alias ?: id)) }}" rel="nofollow">{{ 'MSC.yes'|trans({}, 'contao_default') }}</a> |
+      <a href="{{ insert_tag('faq_nothelpful_url::' ~ (alias ?: id)) }}" rel="nofollow">{{ 'MSC.no'|trans({}, 'contao_default') }}</a>
+    </div>
+  </div>
+{% endif %}

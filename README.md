@@ -59,7 +59,14 @@ Votes are simple feedback counters; repeat votes are not prevented.
 
 The extension supplies `mod_faqtoplist`, `mod_faqrecentlist`,
 `mod_faqrecommendedlist`, `mod_faqhelpfullist`, `mod_faqreader` and `mod_faqpage`
-as `.html5` templates. Create overrides in Contao's template editor as needed.
+as `.html.twig` templates. Create overrides in Contao's template editor as needed.
+The four lists extend `faqextensions_list.html.twig`; the reader and FAQ page
+share `faqextensions_answer.html.twig` and `faqextensions_vote.html.twig`.
+The module template base names remain unchanged.
+
+Under Contao 5.3, the templates use Contao's interoperability layer for the core
+module wrappers, images and comment form. No PHP templates are shipped by this
+extension.
 
 Custom voting links can use `{{faq_helpful_url::ID_OR_ALIAS}}` and
 `{{faq_nothelpful_url::ID_OR_ALIAS}}` on a page containing the corresponding FAQ
@@ -69,6 +76,14 @@ The existing `tl_faq` fields `viewcount`, `recommended`, `helpful`, `nothelpful`
 and `showhelpful` retain their names and stored values.
 
 ## Release history
+
+### Twig templates
+
+* Replaced all six bundled PHP templates with Twig templates.
+* Shared list, answer and voting markup through reusable Twig templates.
+* Preserved module wrappers, pagination, images, enclosures, comments and
+  schema.org data, with translated voting controls and explicit insert-tag rendering.
+* Added rendering integration tests against a real Contao 5.3 kernel.
 
 ### Contao 5.3 support
 
@@ -82,12 +97,26 @@ and `showhelpful` retain their names and stored values.
 ## Updating existing installations
 
 Refresh the Contao cache and run database migrations through the Contao Manager
-or `php vendor/bin/contao-console contao:migrate` after updating. Review custom
-FAQ reader/page template overrides against the supplied templates to retain
-voting controls and Contao's current rendering features.
+or `php vendor/bin/contao-console contao:migrate` after updating. Convert custom `.html5` overrides to `.html.twig` and review them against the
+supplied templates. Existing PHP overrides may still take precedence, so remove
+or rename them after converting. The extension does not convert custom templates
+automatically. Keep the existing template base names in module settings.
 
 ## Development
 
 Install the Composer development dependencies and run `vendor/bin/phpunit`.
 The tests cover service registration, list filtering, preview visibility and
 pagination counts.
+
+Run the rendering integration tests with an installed Contao 5.3 application
+(including the FAQ and comments bundles) and the PHP SQLite extension:
+
+```sh
+CONTAO_APP=/path/to/contao php tests/integration/render.php
+```
+
+The integration test boots a temporary application with its own SQLite database
+and removes it afterwards. It uses the application's installed dependencies but
+does not change that application's files or database. It checks all six templates,
+custom overrides, escaping, translations, real voting insert tags, images,
+downloads, comments and structured data.

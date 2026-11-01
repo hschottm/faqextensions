@@ -1,0 +1,14 @@
+{% extends '@Contao/block_unsearchable.html.twig' %}
+
+{% block content %}
+  {% if faq is empty %}
+    <p class="empty">{{ empty }}</p>
+  {% else %}
+    <ul class="{{ class }}">
+      {% for item in faq %}
+        <li class="{{ item.class }}"><a href="{{ item.href }}" title="{{ item.title }}">{{ item.question }}</a></li>
+      {% endfor %}
+    </ul>
+    {{ pagination|raw }}
+  {% endif %}
+{% endblock %}
