@@ -45,7 +45,7 @@ final class CompatibilityTest extends TestCase
     {
         $framework = $this->createMock(ContaoFramework::class);
         $framework->expects(self::never())->method('initialize');
-        $listener = new InsertTagsListener($framework);
+        $listener = new InsertTagsListener($framework, new \Hschottm\FaqExtensionsBundle\Voting\VoterIdentity('test-secret'));
         self::assertSame('', $listener->onReplaceInsertTags('faq_helpful_url'));
         self::assertFalse($listener->onReplaceInsertTags('unrelated::1'));
     }

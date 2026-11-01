@@ -53,7 +53,35 @@ installing this development version.
 
 Views are counted when the FAQ reader or FAQ page executes. Responses served
 from the page cache do not execute PHP and therefore do not increment counters.
-Votes are simple feedback counters; repeat votes are not prevented.
+
+## Preventing repeated ratings
+
+Voting links open a confirmation page. A rating is counted only after a
+CSRF-protected POST, so prefetching a link or a crawler visiting it does not vote.
+The confirmation page is never cached. The first submitted vote is final;
+submitting again, including the opposite rating, does not change the counters.
+
+* Anonymous visitors are recognized by a signed, random browser cookie named
+  `faqextensions_voter`, valid for one year from the last voting-page visit.
+* Logged-in frontend members are additionally recognized by their member account,
+  including when they use another browser. Browser and account claims are linked
+  when a rating is submitted, preventing a second vote through logging in or out.
+* A transaction and a unique database constraint protect the counters against
+  duplicate and concurrent requests. Existing aggregate vote counts are retained.
+* Only keyed hashes of browser/account identifiers and a timestamp are stored in
+  `tl_faq_vote`. The extension does not store IP addresses or browser fingerprints.
+  Claims are deleted with the FAQ and are not copied when an FAQ is duplicated.
+
+Cookies must be enabled to vote. This is a practical deterrent, not proof of a
+person's identity: anonymous visitors can vote again after clearing/expiring their
+cookie or switching browsers. Different people sharing the same browser may be
+prevented from voting separately. Votes collected before this update cannot be
+associated with voters retrospectively. Rotating the application secret also
+invalidates existing cookie identities and signed voting links.
+
+The cookie and stored identifiers should be described in the site's privacy
+information. The cookie is first issued when the visitor opens a voting link;
+ordinary FAQ page views do not set this cookie.
 
 ## Templates and insert tags
 
@@ -70,12 +98,22 @@ extension.
 
 Custom voting links can use `{{faq_helpful_url::ID_OR_ALIAS}}` and
 `{{faq_nothelpful_url::ID_OR_ALIAS}}` on a page containing the corresponding FAQ
-reader or FAQ page. Voting must be enabled for the answer.
+reader or FAQ page. Voting must be enabled and the answer must be published.
+These insert tags now generate signed links to the confirmation page. Old manually
+constructed `?vote=...&tl_faq=...` links no longer submit votes; replace them with
+the insert tags.
 
 The existing `tl_faq` fields `viewcount`, `recommended`, `helpful`, `nothelpful`
 and `showhelpful` retain their names and stored values.
 
 ## Release history
+
+### Protection against repeated ratings
+
+* Added browser and member recognition with transactional vote recording.
+* Added signed confirmation links, CSRF protection and an uncached voting page.
+* Added the `tl_faq_vote` table, preserving existing aggregate counts.
+* Invalidate FAQ and category cache tags after accepted votes.
 
 ### FAQ duplication
 
@@ -100,6 +138,10 @@ and `showhelpful` retain their names and stored values.
 
 ## Updating existing installations
 
+Run the database migration to create `tl_faq_vote` **before accepting new votes**,
+and clear the application/page caches to replace old voting links. FAQ content
+and existing vote totals are preserved.
+
 Refresh the Contao cache and run database migrations through the Contao Manager
 or `php vendor/bin/contao-console contao:migrate` after updating. Convert custom `.html5` overrides to `.html.twig` and review them against the
 supplied templates. Existing PHP overrides may still take precedence, so remove
@@ -110,7 +152,8 @@ automatically. Keep the existing template base names in module settings.
 
 Install the Composer development dependencies and run `vendor/bin/phpunit`.
 The tests cover service registration, list filtering, preview visibility and
-pagination counts.
+pagination counts, duplicate voting, rollback on errors and concurrent requests.
+The voting tests require PDO SQLite; the concurrency test additionally needs `pcntl`.
 
 Run the rendering integration tests with an installed Contao 5.3 application
 (including the FAQ and comments bundles) and the PHP SQLite extension:
@@ -123,4 +166,4 @@ The integration test boots a temporary application with its own SQLite database
 and removes it afterwards. It uses the application's installed dependencies but
 does not change that application's files or database. It checks all six templates,
 custom overrides, escaping, translations, real voting insert tags, images,
-downloads, comments and structured data.
+downloads, comments, structured data and the full HTTP confirmation/POST flow.

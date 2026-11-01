@@ -4,6 +4,9 @@
     ->addField(['recommended', 'showhelpful'], 'publish_legend', \Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
     ->applyToPalette('default', 'tl_faq');
 
+// Delete voter claims with the FAQ; the child DCA prevents copying those claims.
+$GLOBALS['TL_DCA']['tl_faq']['config']['ctable'][] = 'tl_faq_vote';
+
 $GLOBALS['TL_DCA']['tl_faq']['fields']['viewcount'] = array(
 	'sql'                     => "int(10) unsigned NOT NULL default '0'"
 );

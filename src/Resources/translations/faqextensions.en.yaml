@@ -1,0 +1,12 @@
+vote:
+    title: Rate this answer
+    confirm: Please confirm your rating.
+    helpful: This answer was helpful.
+    nothelpful: This answer was not helpful.
+    submit: Submit rating
+    cookie: A cookie remembers this browser for up to one year to prevent repeated ratings. Cookies must be enabled to submit your rating.
+    accepted: Thank you. Your rating has been saved.
+    duplicate: You have already rated this answer. No additional vote was counted.
+    invalid: Your rating could not be submitted. Please open the voting link again and allow cookies.
+    unavailable: This answer is no longer available for ratings.
+    back: Back to the FAQ

@@ -3,4 +3,23 @@ services:
         class: Hschottm\FaqExtensionsBundle\EventListener\InsertTagsListener
         arguments:
             - "@contao.framework"
+            - "@Hschottm\\FaqExtensionsBundle\\Voting\\VoterIdentity"
         public: true
+
+    Hschottm\FaqExtensionsBundle\Voting\VoterIdentity:
+        arguments: ['%kernel.secret%']
+
+    Hschottm\FaqExtensionsBundle\Voting\VoteRecorder:
+        arguments: ['@database_connection']
+
+    Hschottm\FaqExtensionsBundle\Controller\VoteController:
+        public: true
+        tags: ['controller.service_arguments']
+        arguments:
+            - '@Hschottm\FaqExtensionsBundle\Voting\VoteRecorder'
+            - '@Hschottm\FaqExtensionsBundle\Voting\VoterIdentity'
+            - '@contao.csrf.token_manager'
+            - '%contao.csrf_token_name%'
+            - '@security.token_storage'
+            - '@twig'
+            - '@?fos_http_cache.cache_manager'
