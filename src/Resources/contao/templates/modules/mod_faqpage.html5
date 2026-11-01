@@ -1,19 +1,19 @@
-<?php \System::loadLanguageFile('tl_faq'); ?>
+<?php \Contao\System::loadLanguageFile('tl_faq'); ?>
 <?php $this->extend('block_unsearchable'); ?>
 
 <?php $this->block('content'); ?>
 
-  <?php foreach($this->faq as $category): ?>
-    <article class="<?= $category['class'] ?>">
+  <?php foreach ($this->faq as $category): ?>
+    <article>
       <h2><?= $category['headline'] ?></h2>
 
       <?php foreach ($category['items'] as $faq): ?>
-        <section class="<?= $faq->class ?>">
+        <section>
           <h3 id="<?= $faq->alias ?>"><?= $faq->question ?></h3>
-          <div class="ce_text block">
 
+          <div class="ce_text content-text block">
             <?php if (!$faq->addBefore): ?>
-              <?= $faq->answer ?>
+              <?= $this->cspInlineStyles($faq->answer) ?>
             <?php endif; ?>
 
             <?php if ($faq->addImage): ?>
@@ -21,9 +21,8 @@
             <?php endif; ?>
 
             <?php if ($faq->addBefore): ?>
-              <?= $faq->answer ?>
+              <?= $this->cspInlineStyles($faq->answer) ?>
             <?php endif; ?>
-
           </div>
 
           <?php if ($faq->enclosure): ?>
@@ -52,3 +51,7 @@
   <?php endforeach; ?>
 
 <?php $this->endblock(); ?>
+
+<?php
+
+$this->addSchemaOrg($this->getSchemaOrgData());

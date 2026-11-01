@@ -1,4 +1,4 @@
-<?php \System::loadLanguageFile('tl_faq'); ?>
+<?php \Contao\System::loadLanguageFile('tl_faq'); ?>
 <?php $this->extend('block_searchable'); ?>
 
 <?php $this->block('content'); ?>
@@ -7,10 +7,10 @@
     <?= $this->error ?>
   <?php else: ?>
     <h1><?= $this->question ?></h1>
-    <div class="ce_text block">
 
+    <div class="ce_text content-text block">
       <?php if (!$this->addBefore): ?>
-        <?= $this->answer ?>
+        <?= $this->cspInlineStyles($this->answer) ?>
       <?php endif; ?>
 
       <?php if ($this->addImage): ?>
@@ -18,9 +18,8 @@
       <?php endif; ?>
 
       <?php if ($this->addBefore): ?>
-        <?= $this->answer ?>
+        <?= $this->cspInlineStyles($this->answer) ?>
       <?php endif; ?>
-
     </div>
 
     <?php if ($this->enclosure): ?>
@@ -42,18 +41,25 @@
       </div>
     <?php endif; ?>
 
-    <!-- indexer::stop -->
-    <p class="back"><a href="<?= $this->referer ?>" title="<?= $this->back ?>"><?= $this->back ?></a></p>
-    <!-- indexer::continue -->
+    <?php if ($this->referer): ?>
+      <!-- indexer::stop -->
+      <p class="back"><a href="<?= $this->referer ?>" title="<?= $this->back ?>"><?= $this->back ?></a></p>
+      <!-- indexer::continue -->
+    <?php endif; ?>
   <?php endif; ?>
 
   <?php if ($this->allowComments): ?>
     <div class="ce_comments block">
-      <<?= $this->hlc ?>><?= $this->addComment ?></<?= $this->hlc ?>>
+      <<?= $this->hlc ?>><?= $this->hlcText ?></<?= $this->hlc ?>>
       <?= implode('', $this->comments) ?>
       <?= $this->pagination ?>
+      <<?= $this->hlc ?>><?= $this->addComment ?></<?= $this->hlc ?>>
       <?php $this->insert('mod_comment_form', $this->arrData); ?>
     </div>
   <?php endif; ?>
 
 <?php $this->endblock(); ?>
+
+<?php
+
+$this->addSchemaOrg($this->getSchemaOrgData());

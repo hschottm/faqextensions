@@ -1,5 +1,4 @@
-<testsuites>
-    <testsuite name="Faq Extensions Bundle">
-        <directory>./tests</directory>
-    </testsuite>
-</testsuites>
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php" cacheDirectory=".phpunit.cache">
+    <testsuites><testsuite name="Faq Extensions Bundle"><directory>tests</directory></testsuite></testsuites>
+</phpunit>

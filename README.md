@@ -1,80 +1,93 @@
-[![Latest Version on Packagist](http://img.shields.io/packagist/v/hschottm/faqextensions.svg?style=flat)](https://packagist.org/packages/hschottm/faqextensions)
-[![Installations via composer per month](http://img.shields.io/packagist/dm/hschottm/faqextensions.svg?style=flat)](https://packagist.org/packages/hschottm/faqextensions)
-[![Installations via composer total](http://img.shields.io/packagist/dt/hschottm/faqextensions.svg?style=flat)](https://packagist.org/packages/hschottm/faqextensions)
-
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/hschottm/faqextensions.svg?style=flat)](https://packagist.org/packages/hschottm/faqextensions)
+[![Installations via composer per month](https://img.shields.io/packagist/dm/hschottm/faqextensions.svg?style=flat)](https://packagist.org/packages/hschottm/faqextensions)
+[![Installations via composer total](https://img.shields.io/packagist/dt/hschottm/faqextensions.svg?style=flat)](https://packagist.org/packages/hschottm/faqextensions)
 
 # faqextensions
-faqextensions extends the FAQ bundle support in Contao. The extension allows you to highlight very popular FAQ entries or your personal recommendations in the Contao frontend to make your FAQ section even better. This Contao bundle brings you the following improvements to the FAQ bundle:
 
-* FAQ list module: Most viewed - lists your FAQs by the most viewed FAQ articles, includes optional pagination
-* FAQ list module: Most recent - lists your FAQs by the most recent added FAQ articles, includes optional pagination
-* FAQ list module: Recommended - lists all your recommended FAQ articles, includes optional pagination and custom sort orders
-* FAQ list module: Most helpful - lists your FAQs by the most helpful articles based on a helpful vote by the users, includes optional pagination
+faqextensions extends Contao's FAQ bundle with popular, recommended and helpful
+FAQ lists. Visitors can rate answers, and editors can highlight recommendations.
 
-The faqextensions bundle adds a `viewcount` counter for each FAQ that increases with every view in the frontend. Each FAQ article gets a `Recommended` checkbox to make the article as recommended in the backend. Each FAQ article gets a `Show helpful` checkbox to show the helpful vote at the end of an article in the frontend to allow the users to vote an article up or down.
+## Features
 
-## Extension of existing Data Container Arrays
-### tl_faq
-The `tl_faq` dca has been extended with some new database fields.
-#### viewcount
-`viewcount` adds an integer counter to each FAQ article. Each time an entry will be viewed in the frontend, the counter is increased by 1 containing the abolute number of views for this FAQ article. A new module *Most frequently viewed FAQ list* lists FAQ entries ordered by the number of their absolute view count to present the most viewed FAQ entries.
-```php
-$GLOBALS['TL_DCA']['tl_faq']['fields']['viewcount'] = array(
-	'sql'                     => "int(10) unsigned NOT NULL default '0'"
-);
-```
-#### recommended
-`recommended` is a boolean field that can be checked in the backend for each FAQ article to mark it as *recommended* or *important*. A new module *Recommended FAQ list* lists all FAQ articles which are marked as recommended.
-```php
-$GLOBALS['TL_DCA']['tl_faq']['fields']['recommended'] = array(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_faq']['recommended'],
-	'exclude'                 => true,
-	'filter'                  => true,
-	'eval'                    => array('tl_class'=>'w50 m12'),
-	'inputType'               => 'checkbox',
-	'sql'                     => "char(1) NOT NULL default ''"
-);
-```
-![faqextensions_expert_settings](https://user-images.githubusercontent.com/873113/48935073-a01e9080-ef06-11e8-83dd-26d129117d02.png)
+* **Most frequently viewed FAQ list:** sorts answers by their view counter.
+* **Recent FAQ list:** sorts answers by their last modification (`tstamp`).
+* **Recommended FAQ list:** shows only recommended answers, sorted by question
+  or modification date in ascending or descending order.
+* **Helpful FAQ list:** sorts answers by helpful votes minus unhelpful votes.
+* All four lists support category selection, an item limit, pagination and an
+  optional FAQ reader module.
+* The standard FAQ reader and FAQ page display voting links when enabled.
+* German and English backend labels and voting messages are included.
 
-#### helpful, nothelpful, showhelpful
-`showhelpful` is a boolean field that can be checked in the backend for each FAQ article to show a helpful vote in the frontend for that article. Each helpful vote will increase the integer value of the `helpful` integer field, each not helpful vorte will increase the value of the `nothelpful`integer field. The module *Helpful FAQ list* lists all FAQ entries ordered by their helpful votes.
+## Requirements
 
-```php
-$GLOBALS['TL_DCA']['tl_faq']['fields']['helpful'] = array(
-	'sql'                     => "int(10) unsigned NOT NULL default '0'"
-);
+* Contao 5.3 or newer within Contao 5 (`^5.3`)
+* PHP 8.1 or newer
+* Contao FAQ bundle
 
-$GLOBALS['TL_DCA']['tl_faq']['fields']['nothelpful'] = array(
-	'sql'                     => "int(10) unsigned NOT NULL default '0'"
-);
+The Contao comments bundle is optional.
 
-$GLOBALS['TL_DCA']['tl_faq']['fields']['showhelpful'] = array(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_faq']['showhelpful'],
-	'exclude'                 => true,
-	'filter'                  => true,
-	'eval'                    => array('tl_class'=>'w50 m12'),
-	'inputType'               => 'checkbox',
-	'sql'                     => "char(1) NOT NULL default ''"
-);
+## Installation
+
+Install `hschottm/faqextensions` through the Contao Manager or Composer, then run
+the database migrations:
+
+```sh
+composer require hschottm/faqextensions
+php vendor/bin/contao-console contao:migrate
 ```
 
-![faqextensions_expert_settings](https://user-images.githubusercontent.com/873113/48935073-a01e9080-ef06-11e8-83dd-26d129117d02.png)
+Until a compatible version is tagged, select `dev-master` explicitly when
+installing this development version.
 
-## Modules
-### Most frequently viewed FAQ list
-This module creates a list of the most frequently viewed FAQ articles ordered by their view count. You can limit the number of entries and use pagination for this list. The order of the FAQ articles is always descending by `viewcount` so the most fequently viewed entry is on top of the list.
+## Usage
 
-![faqexentensions_mostfrequent_list](https://user-images.githubusercontent.com/873113/48936106-1ec8fd00-ef0a-11e8-9ece-c2246dbc9d5e.png)
-### Recommended FAQ list
-This module creates a list of all FAQ articles marked as recommended. You can limit the number of entries and use pagination for this list and you can set the sorter order for the entries to alphabetical by FAQ title or by creation date of the FAQ entry, both ascending and descending.
+1. Create FAQ categories and answers in the Contao backend.
+2. Enable **Recommended** for answers you want to highlight, or **Show helpful**
+   to display the voting controls.
+3. Create one of the additional FAQ list modules, select its categories and
+   configure the item limit and pagination.
+4. Set the categories' redirect pages to pages containing a FAQ reader, or select
+   a reader module in the list to display the answer on the same page.
+5. Include the module in your page layout or as a frontend module content element.
 
-![faqextensions_recommended_list](https://user-images.githubusercontent.com/873113/48936109-1f619380-ef0a-11e8-9307-b373a2acfd92.png)
-### Helpful FAQ list
-This module creates a list of the most helpful FAQ articles, odered by their helpful vote. You can limit the number of entries and use pagination for this list. The order of the FAQ articles is always descending by their helpfulness calculated by the sum of the helpful and not helpful votes. The not helpful votes count as negative values.
+Views are counted when the FAQ reader or FAQ page executes. Responses served
+from the page cache do not execute PHP and therefore do not increment counters.
+Votes are simple feedback counters; repeat votes are not prevented.
 
-![faqextensions_helpful_list](https://user-images.githubusercontent.com/873113/48936107-1ec8fd00-ef0a-11e8-86e0-5cde37ed8ff5.png)
-### Recent FAQ list
-This module creates a list of all FAQ articles ordered descending by the most recently added article using the `tstamp` field of each article. You can limit the number of entries and use pagination for this list.
+## Templates and insert tags
 
-![faqextensions_recent_list](https://user-images.githubusercontent.com/873113/48936108-1ec8fd00-ef0a-11e8-8684-8194f70791e4.png)
+The extension supplies `mod_faqtoplist`, `mod_faqrecentlist`,
+`mod_faqrecommendedlist`, `mod_faqhelpfullist`, `mod_faqreader` and `mod_faqpage`
+as `.html5` templates. Create overrides in Contao's template editor as needed.
+
+Custom voting links can use `{{faq_helpful_url::ID_OR_ALIAS}}` and
+`{{faq_nothelpful_url::ID_OR_ALIAS}}` on a page containing the corresponding FAQ
+reader or FAQ page. Voting must be enabled for the answer.
+
+The existing `tl_faq` fields `viewcount`, `recommended`, `helpful`, `nothelpful`
+and `showhelpful` retain their names and stored values.
+
+## Release history
+
+### Contao 5.3 support
+
+* Updated dependencies and replaced removed Contao APIs and global class aliases.
+* Updated reader routing, preview visibility and pagination error handling.
+* Fixed recommendation filtering and the corresponding pagination count.
+* Made the backend options available without the optional comments bundle.
+* Updated FAQ templates for Contao 5.3, including structured data and comments.
+* Preserved existing FAQ content, counters and template names.
+
+## Updating existing installations
+
+Refresh the Contao cache and run database migrations through the Contao Manager
+or `php vendor/bin/contao-console contao:migrate` after updating. Review custom
+FAQ reader/page template overrides against the supplied templates to retain
+voting controls and Contao's current rendering features.
+
+## Development
+
+Install the Composer development dependencies and run `vendor/bin/phpunit`.
+The tests cover service registration, list filtering, preview visibility and
+pagination counts.

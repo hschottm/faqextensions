@@ -6,3 +6,5 @@ composer.lock
 vendor
 # Transifex
 /.tx/
+
+.phpunit.cache/

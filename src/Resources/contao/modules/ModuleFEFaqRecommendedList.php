@@ -8,25 +8,6 @@ class ModuleFEFaqRecommendedList extends ModuleFEFaqList
 {
 	protected $strTemplate = 'mod_faqrecommendedlist';
 
-	public function generate()
-	{
-		if (TL_MODE == 'BE')
-		{
-			$objTemplate = new \BackendTemplate('be_wildcard');
-
-			$objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['faqrecommendedlist'][0]) . ' ###';
-			$objTemplate->title = $this->headline;
-			$objTemplate->id = $this->id;
-			$objTemplate->link = $this->name;
-			$objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
-
-			return $objTemplate->parse();
-		}
-
-		return parent::generate();
-	}
-
-
 	protected function compile()
 	{
     $limit = null;
@@ -38,7 +19,7 @@ class ModuleFEFaqRecommendedList extends ModuleFEFaqList
 			$limit = $this->numberOfItems;
 		}
 
-    $intTotal = \Hschottm\FaqExtensionsBundle\FEFaqModel::countPublishedByPids($this->faq_categories);
+    $intTotal = \Hschottm\FaqExtensionsBundle\FEFaqModel::countPublishedByPids($this->faq_categories, array(), true);
 
     if ($intTotal < 1)
 		{
@@ -60,12 +41,16 @@ class ModuleFEFaqRecommendedList extends ModuleFEFaqList
 
 			// Get the current page
 			$id = 'page_n' . $this->id;
-			$page = (\Input::get($id) !== null) ? \Input::get($id) : 1;
+			$page = \Contao\Input::get($id) ?? '1';
+			if (!ctype_digit((string) $page)) {
+				throw new \Contao\CoreBundle\Exception\PageNotFoundException('Invalid page number');
+			}
+			$page = (int) $page;
 
 			// Do not index or cache the page if the page number is outside the range
 			if ($page < 1 || $page > max(ceil($total/$this->perPage), 1))
 			{
-				throw new PageNotFoundException('Page not found: ' . \Environment::get('uri'));
+				throw new \Contao\CoreBundle\Exception\PageNotFoundException('Page not found: ' . \Contao\Environment::get('uri'));
 			}
 
 			// Set limit and offset
@@ -80,7 +65,7 @@ class ModuleFEFaqRecommendedList extends ModuleFEFaqList
 			}
 
 			// Add the pagination menu
-			$objPagination = new \Pagination($total, $this->perPage, \Config::get('maxPaginationLinks'), $id);
+			$objPagination = new \Contao\Pagination($total, $this->perPage, \Contao\Config::get('maxPaginationLinks'), $id);
 			$this->Template->pagination = $objPagination->generate("\n  ");
 		}
 

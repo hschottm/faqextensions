@@ -11,7 +11,7 @@ class ModuleFEFaqPage extends \Contao\ModuleFaqPage
   private function http_strip_query_param($url, $param)
   {
     $pieces = parse_url($url);
-    if (!$pieces['query']) {
+    if (empty($pieces['query'])) {
         return $url;
     }
 
@@ -39,25 +39,25 @@ class ModuleFEFaqPage extends \Contao\ModuleFaqPage
 		{
 			while ($objFaq->next())
 			{
-        if (\Input::get('vote'))
+        if ($objFaq->showhelpful && in_array(\Contao\Input::get('vote'), ['1', '-1'], true))
         {
-          $alias = \Input::get('tl_faq');
-          if (strcmp($alias, $objFaq->alias) == 0)
+          $alias = \Contao\Input::get('tl_faq');
+          if ((string) $alias === (string) ($objFaq->alias ?: $objFaq->id))
           {
-            $votecalled = true;
-            if (intval(\Input::get('vote')) == 1)
+
+            if (intval(\Contao\Input::get('vote')) == 1)
             {
               $objFaq->helpful++;
             }
-            else if (intval(\Input::get('vote')) == -1)
+            else if (intval(\Contao\Input::get('vote')) == -1)
             {
               $objFaq->nothelpful++;
             }
-            $requestUri = \Environment::get('requestUri');
+            $requestUri = \Contao\Environment::get('requestUri');
             $requestUri = $this->http_strip_query_param($requestUri, "vote");
             $requestUri = $this->http_strip_query_param($requestUri, "tl_faq");
             $objFaq->save();
-            \Controller::redirect($requestUri);
+            \Contao\Controller::redirect($requestUri);
           }
         }
         $objFaq->viewcount++;
@@ -65,6 +65,6 @@ class ModuleFEFaqPage extends \Contao\ModuleFaqPage
 			}
 		}
 
-		\Contao\ModuleFaqPage::compile();
+		parent::compile();
 	}
 }
