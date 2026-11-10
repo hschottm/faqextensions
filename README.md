@@ -1,3 +1,5 @@
+![Contao FAQ Extensions](logo.svg)
+
 # faqextensions
 faqextensions extends the FAQ module support in Contao. The extensions allow you to highlight very popular FAQ entries or your personal recommendations in the Contao frontend to make your FAQ section even better.
 ## Extension of existing Data Container Arrays
@@ -34,3 +36,11 @@ This module creates a list of all FAQ entries marked as recommended. You can lim
 
 ![recommended_module](https://cloud.githubusercontent.com/assets/873113/12032444/a51f9926-ae18-11e5-92b5-58f345e2a0df.png)
 
+
+## Package icon
+
+The scalable [logo.svg](logo.svg) uses a speech bubble, question mark and plus
+sign on an anthracite background with an orange corner, matching the extension family.
+For display in the Contao Manager, the logo is maintained separately in
+[contao/package-metadata](https://github.com/contao/package-metadata) under
+`meta/hschottm/faqextensions/logo.svg`.
