@@ -1,3 +1,5 @@
+![Contao FAQ Extensions](logo.svg)
+
 # faqextensions
 faqextensions extends the FAQ bundle support in Contao. The extensions allow you to highlight very popular FAQ entries or your personal recommendations in the Contao frontend to make your FAQ section even better. This Contao bundle brings you the following improvements to the FAQ bundle:
 
@@ -73,3 +75,11 @@ This module creates a list of the most helpful FAQ articles, odered by their hel
 This module creates a list of all FAQ articles ordered descending by the most recently added article using the `tstamp` field of each article. You can limit the number of entries and use pagination for this list.
 
 ![faqextensions_recent_list](https://user-images.githubusercontent.com/873113/48936108-1ec8fd00-ef0a-11e8-8684-8194f70791e4.png)
+
+## Package icon
+
+The scalable [logo.svg](logo.svg) uses a speech bubble, question mark and plus
+sign on an anthracite background with an orange corner, matching the extension family.
+For display in the Contao Manager, the logo is maintained separately in
+[contao/package-metadata](https://github.com/contao/package-metadata) under
+`meta/hschottm/faqextensions/logo.svg`.
