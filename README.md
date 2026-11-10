@@ -1,3 +1,5 @@
+![Contao FAQ Extensions](logo.svg)
+
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/hschottm/faqextensions.svg?style=flat)](https://packagist.org/packages/hschottm/faqextensions)
 [![Installations via composer per month](https://img.shields.io/packagist/dm/hschottm/faqextensions.svg?style=flat)](https://packagist.org/packages/hschottm/faqextensions)
 [![Installations via composer total](https://img.shields.io/packagist/dt/hschottm/faqextensions.svg?style=flat)](https://packagist.org/packages/hschottm/faqextensions)
@@ -204,3 +206,11 @@ the real Contao translation loader and HTTP routes.
 
 This extension is licensed under the GNU Lesser General Public License, version 3
 or (at your option) any later version (`LGPL-3.0-or-later`). See [LICENSE](LICENSE).
+
+## Package icon
+
+The scalable [logo.svg](logo.svg) uses a speech bubble, question mark and plus
+sign on an anthracite background with an orange corner, matching the extension family.
+For display in the Contao Manager, the logo is maintained separately in
+[contao/package-metadata](https://github.com/contao/package-metadata) under
+`meta/hschottm/faqextensions/logo.svg`.
