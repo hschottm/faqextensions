@@ -130,42 +130,9 @@ the insert tags.
 The existing `tl_faq` fields `viewcount`, `recommended`, `helpful`, `nothelpful`
 and `showhelpful` retain their names and stored values.
 
-## Release history
+## Changelog
 
-### Translations
-
-* Added complete catalogues for all 18 languages shipped with Contao 5.3 Core
-  and the FAQ bundle, including the voting confirmation and error messages.
-* Added locale normalization, regional fallback and Persian right-to-left output.
-* Corrected the list descriptions and sort labels to refer to the last modification.
-
-### Protection against repeated ratings
-
-* Added browser and member recognition with transactional vote recording.
-* Added signed confirmation links, CSRF protection and an uncached voting page.
-* Added the `tl_faq_vote` table, preserving existing aggregate counts.
-* Invalidate FAQ and category cache tags after accepted votes.
-
-### FAQ duplication
-
-* Reset helpful and unhelpful vote counters to zero when duplicating an FAQ.
-
-### Twig templates
-
-* Replaced all six bundled PHP templates with Twig templates.
-* Shared list, answer and voting markup through reusable Twig templates.
-* Preserved module wrappers, pagination, images, enclosures, comments and
-  schema.org data, with translated voting controls and explicit insert-tag rendering.
-* Added rendering integration tests against a real Contao 5.3 kernel.
-
-### Contao 5.3 support
-
-* Updated dependencies and replaced removed Contao APIs and global class aliases.
-* Updated reader routing, preview visibility and pagination error handling.
-* Fixed recommendation filtering and the corresponding pagination count.
-* Made the backend options available without the optional comments bundle.
-* Updated FAQ templates for Contao 5.3, including structured data and comments.
-* Preserved existing FAQ content, counters and template names.
+See [CHANGELOG.md](CHANGELOG.md) for changes grouped by release tag.
 
 ## Updating existing installations
 
